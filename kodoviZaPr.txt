@@ -1,0 +1,1005 @@
+1.zadatak
+
+Korisnik ucitava ceo broj k.Ako je paran ipsisati prvih 10 brojeva.Ako je neparan ispisemo poruku.
+
+/* 1. zadatak */
+#include <stdio.h>
+
+int main() {
+    int k;
+    printf("Unesite ceo broj k: ");
+    if (scanf("%d", &k) != 1) return 0;
+
+    if (k % 2 == 0) {
+        printf("Prvih 10 brojeva (od 1 do 10):\n");
+        for (int i = 1; i <= 10; ++i) {
+            printf("%d ", i);
+        }
+        printf("\n");
+    } else {
+        printf("Broj je neparan — nema ispisa prvih 10 brojeva.\n");
+    }
+    return 0;
+}
+
+
+
+
+
+2.zadatak
+Korisnik ucitava ceo broj N I CEO BROJ K.trEBA ISPISATI na ekranu prvih n brojeva koji su deljivi sa brojem k.
+
+
+/* 2. zadatak */
+#include <stdio.h>
+
+int main() {
+    int N, k;
+    printf("Unesite N (koliko treba ispisati) i k (delilac): ");
+    if (scanf("%d %d", &N, &k) != 2) return 0;
+
+    if (k == 0) {
+        printf("Ne moze se deliti nulom.\n");
+        return 0;
+    }
+
+    int count = 0;
+    int x = 1;
+    printf("Prvih %d brojeva deljivih sa %d:\n", N, k);
+    while (count < N) {
+        if (x % k == 0) {
+            printf("%d ", x);
+            count++;
+        }
+        x++;
+    }
+    printf("\n");
+    return 0;
+}
+
+
+
+3.zadatak
+
+Korisnik unosi brojeve k i n.Poterebno je odrediti zbir svih brojeva izmedju k i n.
+
+
+/* 3. zadatak */
+#include <stdio.h>
+
+long long zbir_interval(int a, int b) {
+    long long sum = 0;
+    if (a <= b) {
+        for (int i = a; i <= b; ++i) sum += i;
+    } else {
+        for (int i = b; i <= a; ++i) sum += i;
+    }
+    return sum;
+}
+
+int main() {
+    int k, n;
+    printf("Unesite k i n: ");
+    if (scanf("%d %d", &k, &n) != 2) return 0;
+    long long s = zbir_interval(k, n);
+    printf("Zbir svih brojeva izmedju %d i %d je: %lld\n", k, n, s);
+    return 0;
+}
+
+
+
+4.zadatak
+
+korisnik ucitava n realnih brojeva,ispistai njihovu srednju vrednost.
+
+
+
+/* 4. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int n;
+    printf("Koliko realnih brojeva? n = ");
+    if (scanf("%d", &n) != 1 || n <= 0) {
+        printf("Neispravan unos.\n");
+        return 0;
+    }
+
+    double suma = 0.0, x;
+    for (int i = 0; i < n; ++i) {
+        printf("Unesite %d. broj: ", i+1);
+        if (scanf("%lf", &x) != 1) return 0;
+        suma += x;
+    }
+    printf("Srednja vrednost: %.6f\n", suma / n);
+    return 0;
+}
+
+
+5.zadatak
+
+Ispisati na ekranu 10 slucajnih brojeva. 
+
+
+
+/* 5. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    srand((unsigned)time(NULL));
+    printf("10 slucajnih brojeva:\n");
+    for (int i = 0; i < 10; ++i) {
+        printf("%d ", rand());
+    }
+    printf("\n");
+    return 0;
+}
+
+6.zadatak.
+
+Formirati nizu koji sadrzi 10 clanova .Elemente niza popuniti sa slucajnim celim brojevima.Ipsisati popunjen niz na ekranu
+
+
+/* 6. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int niz[10];
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < 10; ++i) {
+        niz[i] = rand() % 101; // 0..100
+    }
+    printf("Popunjen niz:\n");
+    for (int i = 0; i < 10; ++i) {
+        printf("%d ", niz[i]);
+    }
+    printf("\n");
+    return 0;
+}
+
+
+7.zadatak(dopuna 1).Pronaci u formitanom nizu najveci broj.
+
+/* 7. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int niz[10];
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < 10; ++i) niz[i] = rand() % 201 - 50; // -50..150
+
+    int max = niz[0];
+    for (int i = 1; i < 10; ++i) if (niz[i] > max) max = niz[i];
+
+    printf("Niz: ");
+    for (int i = 0; i < 10; ++i) printf("%d ", niz[i]);
+    printf("\nNajveci broj u nizu je: %d\n", max);
+    return 0;
+}
+
+ 
+8.zadatak(dopuna 2.)Formirati novi niz celih brojeva tako da svaki clan novog niza bude k puta veci od clana prvog niza.Novi niz ispisati na ekranu.
+
+
+/* 8. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    int n = 10;
+    int a[10], b[10];
+    int k;
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < n; ++i) a[i] = rand() % 51; // 0..50
+
+    printf("Unesite k (faktor): ");
+    if (scanf("%d", &k) != 1) return 0;
+
+    for (int i = 0; i < n; ++i) b[i] = a[i] * k;
+
+    printf("Prvi niz:\n");
+    for (int i = 0; i < n; ++i) printf("%d ", a[i]);
+    printf("\nNovi niz (k*x):\n");
+    for (int i = 0; i < n; ++i) printf("%d ", b[i]);
+    printf("\n");
+    return 0;
+}
+
+
+9.zadatak-struktura telefona
+sadrzi visinu gbram,sirinu i dodeljivanje ,naci  koliko ima gb rama 
+
+/* 9. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct {
+    int visina;
+    int sirina;
+    int gb_ram;
+} Telefon;
+
+int main() {
+    int n;
+    printf("Koliko telefona unosite? ");
+    if (scanf("%d", &n) != 1 || n <= 0) return 0;
+
+    Telefon *t = malloc(n * sizeof(Telefon));
+    if (!t) return 0;
+
+    for (int i = 0; i < n; ++i) {
+        printf("Telefon %d - unesi visinu (px), sirinu (px) i GB RAM: ", i+1);
+        if (scanf("%d %d %d", &t[i].visina, &t[i].sirina, &t[i].gb_ram) != 3) {
+            free(t); return 0;
+        }
+    }
+
+    int ukupno = 0;
+    printf("Podaci o telefonima:\n");
+    for (int i = 0; i < n; ++i) {
+        printf("Telefon %d: visina=%d, sirina=%d, gb_ram=%d\n", i+1, t[i].visina, t[i].sirina, t[i].gb_ram);
+        ukupno += t[i].gb_ram;
+    }
+    printf("Ukupno GB RAM-a: %d\n", ukupno);
+
+    free(t);
+    return 0;
+}
+
+
+10.zadatak.Formirati niz duzine 10 clanova koji sadrzi podatke tipa bazen.Bazen je struktura koja sadrzi podatke o sirini i duzini bazena.sirinu i duzinu bazena generisemo random.Koji je najveci bazen(ispisati sve bazene)
+
+
+/* 10. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+typedef struct {
+    double sirina;
+    double duzina;
+} Bazen;
+
+int main() {
+    Bazen niz[10];
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < 10; ++i) {
+        niz[i].sirina = (rand() % 901 + 100) / 10.0; // 10.0 .. 100.0
+        niz[i].duzina = (rand() % 901 + 100) / 10.0;
+    }
+
+    double maxP = -1.0;
+    int idx = -1;
+    printf("Svi bazeni (sirina x duzina) i povrsine:\n");
+    for (int i = 0; i < 10; ++i) {
+        double p = niz[i].sirina * niz[i].duzina;
+        printf("%d) %.2f x %.2f -> povrsina = %.2f\n", i+1, niz[i].sirina, niz[i].duzina, p);
+        if (p > maxP) { maxP = p; idx = i; }
+    }
+    printf("Najveci bazen je %d) %.2f x %.2f sa povrsinom %.2f\n", idx+1, niz[idx].sirina, niz[idx].duzina, maxP);
+    return 0;
+}
+
+11.Formirati niz koji ima 10 clanova.Elementi niza su strukture.Struktura sadrzi podatke o duzini i sirini njive.
+podaci se popunjavaju random brojevima.Ispisati sve clanove niza i odrediti koliku povrsinu ima njiva (u arima)
+
+
+
+
+/* 11. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+typedef struct {
+    double sirina;
+    double duzina;
+} Njiva;
+
+int main() {
+    Njiva niz[10];
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < 10; ++i) {
+        niz[i].sirina = (rand() % 901 + 100) / 10.0; // 10..100 m
+        niz[i].duzina = (rand() % 2001 + 100) / 10.0; // 10..210 m
+    }
+
+    printf("Njive (m) i povrsine (u arima):\n");
+    for (int i = 0; i < 10; ++i) {
+        double pov = niz[i].sirina * niz[i].duzina; // m^2
+        double ari = pov / 100.0;
+        printf("%d) %.2f x %.2f -> %.2f m^2 = %.2f ari\n", i+1, niz[i].sirina, niz[i].duzina, pov, ari);
+    }
+    return 0;
+}
+
+
+12.Deda sprema drva za zimu.Kupio je 100 cepanica i za svaku zna precnik i duzinu.Podaci su upisani u niz u cm.Koliko je kubika kupio deda za zimu.
+
+/* 12. zadatak */
+#include <stdio.h>
+#include <math.h>
+
+int main() {
+    const int N = 100;
+    double precnik, duzina; // u cm
+    double ukupno_cm3 = 0.0;
+    printf("Unos podataka za 100 cepanica (precnik cm, duzina cm).\n");
+    for (int i = 0; i < N; ++i) {
+        printf("Cepanica %d - precnik(cm) duzina(cm): ", i+1);
+        if (scanf("%lf %lf", &precnik, &duzina) != 2) return 0;
+        double r = precnik / 2.0;
+        double Vcm3 = M_PI * r * r * duzina;
+        ukupno_cm3 += Vcm3;
+    }
+    double ukupno_m3 = ukupno_cm3 / 1000000.0;
+    printf("Ukupno kupljeno: %.6f m^3\n", ukupno_m3);
+    return 0;
+}
+
+
+13.Formirati strukturu koja sadrzi podatke o broju radnih sati i cene po sat.Formiramo radnike Mika i Zika i korisnik unosi podatke za ta dva radnika,ko ima vecu platu.
+
+/* 13. zadatak */
+#include <stdio.h>
+
+typedef struct {
+    double sati;
+    double cena_po_satu;
+} Radnik;
+
+double plata(Radnik r) {
+    return r.sati * r.cena_po_satu;
+}
+
+int main() {
+    Radnik m, z;
+    printf("Mika - unesi broj sati i cenu po satu: ");
+    if (scanf("%lf %lf", &m.sati, &m.cena_po_satu) != 2) return 0;
+    printf("Zika - unesi broj sati i cenu po satu: ");
+    if (scanf("%lf %lf", &z.sati, &z.cena_po_satu) != 2) return 0;
+
+    double pm = plata(m), pz = plata(z);
+    printf("Mika plata = %.2f, Zika plata = %.2f\n", pm, pz);
+    if (pm > pz) printf("Mika ima vecu platu.\n");
+    else if (pz > pm) printf("Zika ima vecu platu.\n");
+    else printf("Plate su jednake.\n");
+    return 0;
+}
+
+
+14.Korisnik unosi dva cela broja potrebno je ispisati na ekranu zbir ova dva broja .Koriscenjem funkcije sabiranje(ona ima dva ulazna parametra)
+
+/* 14. zadatak */
+#include <stdio.h>
+
+int sabiranje(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    int x, y;
+    printf("Unesite dva cela broja: ");
+    if (scanf("%d %d", &x, &y) != 2) return 0;
+    int s = sabiranje(x, y);
+    printf("Zbir: %d\n", s);
+    return 0;
+}
+
+
+15.Formirati strukturu voz koja ima podatke o broju vagona i o broju putnika po vagonu.Korisnik ucitava podatke i 2 vioza ĆIRA I SPIRA UZ POMOC POSEBNE FUNKCIJE OIDEREDITI KOJI VOZ  MOZE DA  PRIMI VISE PUTNIKA.
+
+/* 15. zadatak */
+#include <stdio.h>
+
+typedef struct {
+    int broj_vagona;
+    int putnici_po_vagonu;
+} Voz;
+
+void ucitaj_voz(Voz *v, const char *ime) {
+    printf("Unesite broj vagona i putnika po vagonu za voz %s: ", ime);
+    scanf("%d %d", &v->broj_vagona, &v->putnici_po_vagonu);
+}
+
+int ukupno_putnika(Voz v) {
+    return v.broj_vagona * v.putnici_po_vagonu;
+}
+
+int main() {
+    Voz cira, spira;
+    ucitaj_voz(&cira, "CIRA");
+    ucitaj_voz(&spira, "SPIRA");
+
+    int pc = ukupno_putnika(cira);
+    int ps = ukupno_putnika(spira);
+    printf("Cira moze prevesti %d putnika, Spira %d putnika.\n", pc, ps);
+    if (pc > ps) printf("CIRA moze da primi vise putnika.\n");
+    else if (ps > pc) printf("SPIRA moze da primi vise putnika.\n");
+    else printf("Oba voza mogu isti broj putnika.\n");
+    return 0;
+}
+
+
+16.Formirati klasu cetvorougao koja ima privatne pormenljive duzinu i sirinu i javne funkcije,
+dodeljivaje i povrisnu.Formirati jedan objekat,ucitati podatke i ispisati na ekranu.
+
+
+/* 16. zadatak (C verzija sa structom) */
+#include <stdio.h>
+
+typedef struct {
+    double duzina;
+    double sirina;
+} Cetvorougao;
+
+void dodeli(Cetvorougao *c, double d, double s) {
+    c->duzina = d;
+    c->sirina = s;
+}
+double povrsina(Cetvorougao c) {
+    return c.duzina * c.sirina;
+}
+
+int main() {
+    Cetvorougao c;
+    double d, s;
+    printf("Unesite duzinu i sirinu cetvorougla: ");
+    if (scanf("%lf %lf", &d, &s) != 2) return 0;
+    dodeli(&c, d, s);
+    printf("Povrsina cetvorougla: %.2f\n", povrsina(c));
+    return 0;
+}
+
+
+17.Formirati klasu bazen sa privatnim promenljivama duzina sirina i dubina i javnim funkcijama za dodeljivanje ,zapremina povrsina.
+Formirati 2 obejkta Miku i Ziku.Odrediti ko ima veci bazen
+
+
+/*Formirati klasu bazen sa tri privatne promenljive.
+Klasa ima funkciju za dodeljivanje i funkciju za izračunavanje zapremine.
+Formirati Zikin i Mikin bazen i odrediti ko ima veći bazen.*/
+
+#include <iostream>
+#include <stdio.h>
+
+class bazen {
+private:
+    int duzina;
+    int sirina;
+    int dubina;
+
+public:
+    void dodela(int a, int b, int c) {
+        duzina = a;
+        sirina = b;
+        dubina = c;
+    }
+
+    int zapremina() const {
+        return duzina * sirina * dubina;
+    }
+};
+
+int main(int argc, const char* argv[]) {
+    bazen zika, mika;
+    int duz, sir, dub, zm, zz;
+
+    printf("Dimenzije Zikinog bazena:\n");
+    scanf("%d %d %d", &duz, &sir, &dub);
+    zika.dodela(duz, sir, dub);
+
+    printf("Dimenzije Mikinog bazena:\n");
+    scanf("%d %d %d", &duz, &sir, &dub);
+    mika.dodela(duz, sir, dub);
+
+    zm = mika.zapremina();
+    zz = zika.zapremina();
+
+    if (zz > zm)
+        printf("Zika ima veći bazen.\n");
+    else if (zm > zz)
+        printf("Mika ima veći bazen.\n");
+    else
+        printf("Bazeni su iste zapremine.\n");
+
+    return 0;
+}
+
+
+
+18.Formirati klasu radnik koja ima privtne promenljive br.sati i cena po satu i javne promenljve funckije platu i funckiju dodeljivanje.Formirati niz koji sadrzi 10 elemenata klase radnik br sati i cene po satu popuniti random i ispisati podatke za sve radnike na ekranu i odrediti najvecu platu.
+
+/* 18. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+typedef struct {
+    int br_sati;
+    double cena;
+} Radnik;
+
+double plata(Radnik r) {
+    return r.br_sati * r.cena;
+}
+
+int main() {
+    Radnik niz[10];
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < 10; ++i) {
+        niz[i].br_sati = rand() % 161; // 0..160 sati
+        niz[i].cena = (rand() % 2001) / 10.0 + 5.0; // 5.0 .. 205.0
+    }
+
+    double max = -1.0;
+    int idx = -1;
+    printf("Radnici:\n");
+    for (int i = 0; i < 10; ++i) {
+        double p = plata(niz[i]);
+        printf("%d) sati=%d cena=%.2f plata=%.2f\n", i+1, niz[i].br_sati, niz[i].cena, p);
+        if (p > max) { max = p; idx = i; }
+    }
+    printf("Najveca plata: %.2f (radnik %d)\n", max, idx+1);
+    return 0;
+}
+
+
+19.definisati klasu krug koja ima privatnu promenljivu poluprecnik i tri javne funkcije za 
+dodeljivanje poluprecnika
+izracunavanje obima 
+za izacunavanje povrsine 
+
+/* 19. zadatak (C verzija) */
+#include <stdio.h>
+#include <math.h>
+
+typedef struct {
+    double r;
+} Krug;
+
+void setPoluprecnik(Krug *k, double r) { k->r = r; }
+double obim(Krug k) { return 2.0 * M_PI * k.r; }
+double povrsina(Krug k) { return M_PI * k.r * k.r; }
+
+int main() {
+    Krug k;
+    double r;
+    printf("Unesite poluprecnik kruga: ");
+    if (scanf("%lf", &r) != 1) return 0;
+    setPoluprecnik(&k, r);
+    printf("Obim = %.6f, Povrsina = %.6f\n", obim(k), povrsina(k));
+    return 0;
+}
+
+
+
+20.Definisati dva objekta ,uneti poluprecnike i odrediti ko ima vecu povrsinu.
+
+
+/* 20. zadatak */
+#include <stdio.h>
+#include <math.h>
+
+typedef struct { double r; } Krug;
+double pov(Krug k) { return M_PI * k.r * k.r; }
+
+int main() {
+    Krug a, b;
+    printf("Unesi poluprecnik prvog kruga: ");
+    if (scanf("%lf", &a.r) != 1) return 0;
+    printf("Unesi poluprecnik drugog kruga: ");
+    if (scanf("%lf", &b.r) != 1) return 0;
+
+    double pa = pov(a), pb = pov(b);
+    printf("Povrsina A = %.6f, Povrsina B = %.6f\n", pa, pb);
+    if (pa > pb) printf("Prvi krug ima vecu povrsinu.\n");
+    else if (pb > pa) printf("Drugi krug ima vecu povrsinu.\n");
+    else printf("Imaju iste povrsine.\n");
+    return 0;
+}
+
+
+21.Koristeci istu klasu,formirati niz ciji su elementi objekti klase krug.Duzina niza je 10 clanova.Niz popuniti random podacima za poluprecnik.Odrediti koji je najveci obim i na koojoj lokaciji.Pre toga ispisati vrednosti svih poluprecnika u nizu.
+
+/* 21. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+typedef struct { double r; } Krug;
+double obim(Krug k) { return 2.0 * M_PI * k.r; }
+
+int main() {
+    Krug niz[10];
+    srand((unsigned)time(NULL));
+    for (int i = 0; i < 10; ++i) {
+        niz[i].r = (rand() % 901 + 100) / 10.0; // 10.0 .. 100.0
+    }
+    printf("Poluprecnici: ");
+    for (int i = 0; i < 10; ++i) printf("%.2f ", niz[i].r);
+    printf("\n");
+
+    double maxO = -1.0;
+    int idx = -1;
+    for (int i = 0; i < 10; ++i) {
+        double o = obim(niz[i]);
+        if (o > maxO) { maxO = o; idx = i; }
+    }
+    printf("Najveci obim = %.4f na poziciji %d (poluprecnik %.2f)\n", maxO, idx+1, niz[idx].r);
+    return 0;
+}
+
+
+22.Formirati klasu drvo.Privatne du poluprecnik i duzina.Javne su dodeli povrsina i zapremina.Formirati niz duzine 20.Popuniti random brojevima.Odrediti ukupnu zapreminu svih stabala u nizu
+NAPOMENA:drvo ima oblik valjka -pa tako racunati povrsinu i zapreminu!!!
+
+/* 22. zadatak */
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+typedef struct {
+    double poluprecnik; // cm
+    double duzina; // cm (visina)
+} Drvo;
+
+double zapremina_cm3(Drvo d) {
+    double r = d.poluprecnik;
+    double h = d.duzina;
+    return M_PI * r * r * h;
+}
+double bocna_povrsina_cm2(Drvo d) {
+    return 2.0 * M_PI * d.poluprecnik * d.duzina;
+}
+
+int main() {
+    Drvo niz[20];
+    srand((unsigned)time(NULL));
+    // Popuni random (u cm). recimo radijus 5..50 cm, duzina 50..500 cm
+    for (int i = 0; i < 20; ++i) {
+        niz[i].poluprecnik = (rand() % 46) + 5;    // 5..50 cm
+        niz[i].duzina = (rand() % 451) + 50;      // 50..500 cm
+    }
+
+    double ukupno_cm3 = 0.0;
+    printf("Stabla (poluprecnik cm, duzina cm):\n");
+    for (int i = 0; i < 20; ++i) {
+        double V = zapremina_cm3(niz[i]);
+        ukupno_cm3 += V;
+        printf("%2d) r=%.1f cm, h=%.1f cm -> V=%.2f cm^3\n", i+1, niz[i].poluprecnik, niz[i].duzina, V);
+    }
+    double ukupno_m3 = ukupno_cm3 / 1000000.0;
+    printf("Ukupna zapremina svih stabala = %.6f m^3\n", ukupno_m3);
+    return 0;
+}
+
+
+/*Formirati klasu "drvo". Privatne promenljive su poluprecnik i duzina. Javne su dodeli, povrs i zapremina. Formirati niz duzine 20 popunjen random brojevima. Odrediti ukupnu zapreminu svih stabala u nizu. NAPOMENA! : drvo ima oblik valjka, pa tako racunati povrsinu i zapreminu.*/
+
+
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+class drvo{
+private:
+    float pp, duzina;
+public:
+    void dodeli(int x, int y){
+        pp=x;
+        duzina=y;
+    }
+    float zapremina(){
+        return pp*pp*3.14*duzina;
+    }
+    float povrsina(){
+        return 2*pp*pp*3.14+2*pp*3.14*duzina;
+    }
+};
+
+int main(int argc, const char * argv[]) {
+    drvo niz[20];
+    int i, temp1, temp2;
+    float s=0;
+    srand(time(0));
+    for (i=0; i<20; i++) {
+        temp1=rand()%45+5;
+        temp2=rand()%750+150;
+        niz[i].dodeli(temp1, temp2);
+        printf("drvo br %d, r=%d, P=%.2f, V=%.2f\n\n", i+1, temp1, niz[i].povrsina(), niz[i].zapremina());
+        s+=niz[i].zapremina();
+    }
+    printf("\n\nUkupna zapremina svog drveca iznosi %.2fm^3.\n\n", s/1000000);
+    return EXIT_SUCCESS;
+}
+
+
+
+
+
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+class drvo{
+private:
+    float pp, duzina;
+public:
+    void dodeli(int x, int y){
+        pp=x;
+        duzina=y;
+    }
+    float zapremina(){
+        return pp*pp*3.14*duzina;
+    }
+    float povrsina(){
+        return 2*pp*pp*3.14+2*pp*3.14*duzina;
+    }
+};
+
+int main(int argc, const char * argv[]) {
+    drvo niz[20];
+    int i, temp1, temp2;
+    float s=0;
+    srand(time(0));
+    for (i=0; i<20; i++) {
+        temp1=rand()%45+5;
+        temp2=rand()%750+150;
+        niz[i].dodeli(temp1, temp2);
+        printf("drvo br %d, r=%d, P=%.2f, V=%.2f\n\n", i+1, temp1, niz[i].povrsina(), niz[i].zapremina());
+        s+=niz[i].zapremina();
+    }
+    printf("\n\nUkupna zapremina svog drveca iznosi %.2fm^3.\n\n", s/1000000);
+    return EXIT_SUCCESS;
+}
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+class drvo{
+private:
+    float pp, duzina;
+public:
+    void dodeli(int x, int y){
+        pp=x;
+        duzina=y;
+    }
+    float zapremina(){
+        return pp*pp*3.14*duzina;
+    }
+    float povrsina(){
+        return 2*pp*pp*3.14+2*pp*3.14*duzina;
+    }
+};
+
+int main(int argc, const char * argv[]) {
+    drvo niz[20];
+    int i, temp1, temp2;
+    float s=0;
+    srand(time(0));
+    for (i=0; i<20; i++) {
+        temp1=rand()%45+5;
+        temp2=rand()%750+150;
+        niz[i].dodeli(temp1, temp2);
+        printf("drvo br %d, r=%d, P=%.2f, V=%.2f\n\n", i+1, temp1, niz[i].povrsina(), niz[i].zapremina());
+        s+=niz[i].zapremina();
+    }
+    printf("\n\nUkupna zapremina svog drveca iznosi %.2fm^3.\n\n", s/1000000);
+    return EXIT_SUCCESS;
+}
+
+
+
+
+
+
+ <div class="kartica">
+     <h3>Zadatak 22.</h3>
+     <p>
+         Formirati klasu drvo.Privatne du poluprecnik i duzina.Javne su dodeli povrsina i zapremina.Formirati niz duzine 20.Popuniti random brojevima.Odrediti ukupnu zapreminu svih stabala u nizu
+         NAPOMENA:drvo ima oblik valjka -pa tako racunati povrsinu i zapreminu!!!
+
+     </p>
+     <a href="file:///C:\Users\Korisnik\OneDrive\Desktop\Sajt-Programiranje\Sajt-Programiranje\zadaci\22.z.jpg" target="_blank">Otvori</a>
+
+ </div>
+
+//LISTE-3 ZADATKA
+
+//TEKSTUALNI FAJLOVI-2 ZADATKA 
+
+
+
+
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h> // Potrebno za srand(time(NULL))
+
+// Iako je nazvano "Radnik" u svesci, radi se o oceni za Učenika
+struct Radnik { 
+    int srpski;
+    int matematika;
+    int fizika;
+};
+
+int main() {
+    // Inicijalizacija generatora slučajnih brojeva
+    srand(time(NULL)); 
+    
+    // Lista od 10 struktura (učenika)
+    struct Radnik Lista[10]; 
+    int i, najbolji = 0;
+    float prosek, max = 0;
+    
+    // 1. GENERISANJE OCENA (od 1 do 5)
+    for (i = 0; i < 10; i++) {
+        Lista[i].srpski = rand() % 5 + 1;
+        Lista[i].matematika = rand() % 5 + 1;
+        Lista[i].fizika = rand() % 5 + 1;
+    }
+
+    // 2. ISPIS OCENA I PRONALAŽENJE NAJBOLJEG PROSEKA
+    for (i = 0; i < 10; i++) {
+        // Ispis ocena
+        printf("Ucenik %d. Srpski = %d. Matematika = %d. Fizika = %d\n", 
+               i + 1, Lista[i].srpski, Lista[i].matematika, Lista[i].fizika);
+        
+        // Racunanje proseka. Eksplicitna konverzija u float je ključna.
+        prosek = ((float)Lista[i].srpski + Lista[i].matematika + Lista[i].fizika) / 3.0;
+        
+        // Provera da li je trenutni prosek veći od trenutnog maksimuma
+        if (prosek > max) {
+            max = prosek;
+            najbolji = i + 1; // Čuvamo redni broj učenika (indeks + 1)
+        }
+    }
+    
+    // 3. ISPIS REZULTATA
+    printf("\nNajbolji prosek: %.2f (Ucenik %d)\n", max, najbolji);
+    
+    return 0;
+}
+
+
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
+#include <list> // Neophodno za std::list
+#include <iterator> // Neophodno za std::advance
+
+using namespace std;
+
+// Struktura za tačku sa X i Y koordinatom
+struct tacka {
+    int x;
+    int x, y;
+};
+
+int main() {
+    // Deklaracija STL liste koja sadrži strukture 'tacka'
+    list<tacka> tacke; 
+    list<tacka> cudo; // Dodatna lista
+    tacka element;
+    int i, z = 1;
+    
+    // 1. PUNJENJE LISTE SA 10 TAČAKA
+    for (i = 0; i < 10; i++) {
+        element.x = i * 10;
+        element.y = i * 20;
+        tacke.push_back(element); // Dodaje element na kraj liste
+    }
+    
+    printf("Sadrzaj Liste:\n");
+    
+    // Iteratori za listu 'tacke'
+    list<tacka>::iterator r; 
+    
+    // ITERACIJA 1: Ispis svih tačaka
+    for (r = tacke.begin(); r != tacke.end(); r++) {
+        element = *r; // Dereferenciranje iteratora da dobijemo element
+        printf("%d. Tacka liste ima koordinate: x=%d / y=%d\n", 
+               z++, element.x, element.y);
+    }
+    z = 1; // Resetovanje brojača
+
+    // 2. MANIPULACIJA ITERATORIMA I ELEMENTIMA
+    
+    // Postavljanje iteratora 'r' na početak
+    r = tacke.begin(); 
+    
+    // Dohvatanje tačke na poziciji 0
+    element = *r; 
+    printf("\nTačka na poziciji 0 je x=%d / y=%d\n", element.x, element.y);
+    
+    // Pomeranje iteratora 'r' za 2 mesta unapred
+    advance(r, 2); 
+    
+    // Tačka na poziciji na koju pokazuje 'r' (pozicija 2)
+    tacke.erase(r); // Brisanje tačke na poziciji 2
+
+    // 3. KOPIRANJE (nekompletno na slici, ali logično prošireno)
+    
+    // Postavljanje iteratora 'r' ponovo na početak
+    r = tacke.begin(); 
+    
+    // Kopiranje prve tačke iz liste 'tacke' u listu 'cudo'
+    cudo.push_back(*r); 
+    
+    // 4. ITERACIJA 2: Ispis tačaka nakon brisanja
+    printf("\nSadrzaj LISTE nakon brisanja:\n");
+    z = 1;
+    for (r = tacke.begin(); r != tacke.end(); r++) {
+        element = *r;
+        printf("%d. Tacka liste ima koordinate: x=%d / y=%d\n", 
+               z++, element.x, element.y);
+    }
+    
+    // 5. ISPIS LISTE 'cudo'
+    printf("\nSadrzaj LISTE 'cudo':\n");
+    list<tacka>::iterator w; 
+    z = 1;
+    for (w = cudo.begin(); w != cudo.end(); w++) {
+        element = *w;
+        printf("%d. Tacka liste 'cudo' ima koordinate: x=%d / y=%d\n", 
+               z++, element.x, element.y);
+    }
+    return 0; }
+
+
+
+
+int main(){
+FILE *pok;
+int x;
+pok=fopen("podaxi.txt","w");
+srand(time(null));
+for(int i=0;i<10;i++){
+x=rand()%90+10;
+fprintf(pok,"%d\n",x);}
+
+fclose(pok);
+pok=fopen("podaxi.txt","a");
+x=5555;
+fprintf(pok,"%d\n",x);
+fclose(pok);
+pok=fopen("podaxi.txt","r++");
+fseek(pok,12,SPEEK_SET);
+x=8888;
+
+fprintf(pok,"%d\n",x);
+fclose(pok);
+pok=fopen("podaxi.txt","r");
+
+do{
+fscanf(pok,"%d",&x);
+if(feof(pok)==0)
+printf("%d\n",x);}
+while(feof(pok)==0);
+fclose(pok);
+return 0;
+}

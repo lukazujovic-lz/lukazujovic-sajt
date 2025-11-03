@@ -1,0 +1,2 @@
+C:\Users\Korisnik\OneDrive\Desktop\Sajt-Programiranje\Sajt-Programiranje\obj\Debug\Sajt-Programiranje.vbproj.AssemblyReference.cache
+C:\Users\Korisnik\OneDrive\Desktop\Sajt-Programiranje\Sajt-Programiranje\obj\Debug\Sajt-Programiranje.vbproj.CoreCompileInputs.cache
