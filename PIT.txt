@@ -1,0 +1,2216 @@
+namespace zadatak1
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Random x = new Random();
+            int levo = x.Next(0, 400);
+            int gore = x.Next(50, 400);
+            if (e.KeyChar == 'a') button1.Left = button1.Left - 10;
+            if (e.KeyChar == 'd') button1.Left = button1.Left + 10;
+            if (e.KeyChar == 'w') button1.Top = button1.Top - 10;
+            if (e.KeyChar == 's') button1.Top = button1.Top + 10;
+            if (button1.Bounds.IntersectsWith(button2.Bounds))
+            {
+                button2.Left = levo;
+                button2.Top = gore;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+                Button button1=(Button)sender;
+                int originalwidth=button1.Size.Width;
+                int originalheight=button1.Size.Height;
+                int br = 5;
+                button1.Size = new System.Drawing.Size(originalwidth +br, originalheight+br);
+            }
+            if (button1.Left < 0) button1.Left = 0;
+            if (button1.Top < 0) button1.Top = 0;
+            if (button1.Left > 800) button1.Left = 800;
+            if (button1.Top > 450) button1.Top = 450;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            label1.Text = "10";
+            label2.Text = "0";
+            timer1.Start();
+            button1.Enabled = true;
+            button1.Focus();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            string s = label1.Text;
+            int broj=Convert.ToInt32(s);
+            broj--;
+            if (broj < 0)
+            {
+                timer1.Stop();
+                button1.Enabled=false;
+                MessageBox.Show("GAME OVER");
+            }
+            if (broj > -1)
+            {
+                s = Convert.ToString(broj);
+                label1.Text = s;
+            }
+        }
+
+    }
+}
+
+DRUGI ZADATAK
+
+namespace zadatak2
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            timer2.Start();
+            timer1.Start();
+            button1.Enabled = true;
+            button1.Focus();
+            label1.Text = "0";
+            button1.Left = 31;
+            button3.Left = 179;
+            button4.Left = 179;
+            button5.Left = 353;
+            button6.Left = 353;
+            button7.Left = 532;
+            button8.Left = 532;
+            button9.Left = 734;
+            button10.Left = 734;
+            button11.Left = 734;
+        }
+
+        private void button1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'w') button1.Top = button1.Top - 20;
+        }
+        int brzina = 8;
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Random x = new Random();
+            int Visina = x.Next(40, 120) + 20;
+            button1.Top += 2;
+            button3.Left -= brzina;
+            button4.Left -= brzina;
+            button5.Left -= brzina;
+            button6.Left -= brzina;
+            button7.Left -= brzina;
+            button8.Left -= brzina;
+            button9.Left -= brzina;
+            button10.Left -= brzina;
+
+            if (button1.Top > 280)
+            {
+                timer1.Stop();
+                button1.Enabled = false;
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button4.Left < -23)
+            {
+                button3.Height = Visina;
+                button4.Height = 800;
+                button4.Top = Visina + 100;
+                button3.Left = 750;
+                button4.Left = 750;
+                label2.Text = "0";
+            }
+
+            if (button6.Left < -23)
+            {
+                button5.Height = Visina;
+                button6.Height = 800;
+                button6.Top = Visina + 100;
+                button5.Left = 750;
+                button6.Left = 750;
+                label2.Text = "0";
+            }
+
+            if (button8.Left < -23)
+            {
+                button7.Height = Visina;
+                button8.Height = 800;
+                button8.Top = Visina + 100;
+                button7.Left = 750;
+                button8.Left = 750;
+                label2.Text = "0";
+            }
+
+            if (button10.Left < -23)
+            {
+                button9.Height = Visina;
+                button10.Height = 800;
+                button10.Top = Visina + 100;
+                button9.Left = 750;
+                button10.Left = 750;
+                label2.Text = "0";
+            }
+
+            int poeni = Convert.ToInt32(label1.Text);
+            int prosao = Convert.ToInt32(label2.Text);
+
+
+            if (button1.Left > button3.Left && button1.Left < button3.Left + 5 && prosao != 1)
+            {
+                poeni = poeni + 1;
+                label1.Text = poeni.ToString();
+                label2.Text = "1";
+            }
+
+
+            if (button1.Left > button5.Left && button1.Left < button5.Left + 5 && prosao != 2)
+            {
+                poeni = poeni + 1;
+                label1.Text = poeni.ToString();
+                label2.Text = "2";
+            }
+
+
+            if (button1.Left > button7.Left && button1.Left < button7.Left + 5 && prosao != 3)
+            {
+                poeni = poeni + 1;
+                label1.Text = poeni.ToString();
+                label2.Text = "3";
+            }
+
+
+            if (button1.Left > button9.Left && button1.Left < button9.Left + 5 && prosao != 4)
+            {
+                poeni = poeni + 1;
+                label1.Text = poeni.ToString();
+                label2.Text = "4";
+            }
+
+            if (button1.Bounds.IntersectsWith(button3.Bounds) || button1.Bounds.IntersectsWith(button4.Bounds) || button1.Bounds.IntersectsWith(button5.Bounds) || button1.Bounds.IntersectsWith(button6.Bounds) || button1.Bounds.IntersectsWith(button7.Bounds) || button1.Bounds.IntersectsWith(button8.Bounds) || button1.Bounds.IntersectsWith(button9.Bounds) || button1.Bounds.IntersectsWith(button10.Bounds))
+            {
+                timer1.Stop();
+                button1.Enabled = false;
+                MessageBox.Show("GAME OVER");
+
+            }
+
+            if (button11.Visible)
+            {
+                button11.Left -= brzina;
+                if (button11.Left < -30)
+                {
+                    button11.Visible = false;
+                }
+            }
+
+            if (button11.Visible && button1.Bounds.IntersectsWith(button11.Bounds))
+            {
+                brzina = 16;
+                button11.Visible = false;
+                timer3.Start();
+            }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if (!button11.Visible)
+            {
+                Random x = new Random();
+                button11.Left = 700;
+                button11.Top = x.Next(130, 220);
+                button11.Visible = true;
+            }
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            brzina = 8;
+            timer3.Stop();
+        }
+    }
+}
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace dinosaur
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+            timer2.Start();
+            button1.Enabled = true;
+            button1.Focus();
+            timer3.Start();
+        }
+        int poeni = 0;
+        private void button1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'w') button1.Top = button1.Top - 40;
+            if (e.KeyChar == 'd') button1.Left = button1.Left + 40;
+            if (button1.Top < 115)
+            {
+                poeni++;
+
+            }
+            if (poeni == 1)
+            {
+                button1.Enabled = false;
+            }
+            if (button1.Bounds.IntersectsWith(button8.Bounds))
+            {
+                button1.Enabled = true;
+                button1.Focus();
+                
+
+            }
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            button2.Left -= 10;
+            if (button2.Left < -13)
+            {
+                
+                button2.Left = 700;
+            }
+            button3.Left -= 10;
+            if (button3.Left < -13)
+            {
+                
+                button3.Left = 700;
+            }
+
+            button4.Left -= 10;
+            if (button4.Left < -13)
+            {
+                button4.Left = 700;
+            }
+            button5.Left -= 10;
+            if (button5.Left < -13)
+            {
+                button5.Left = 700;
+            }
+            if (button1.Bounds.IntersectsWith(button2.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+            if (button1.Bounds.IntersectsWith(button3.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+            if (button1.Bounds.IntersectsWith(button4.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+            if (button1.Bounds.IntersectsWith(button5.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+            if (button1.Bounds.IntersectsWith(button6.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            button1.Top += 5;
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            button6.Left -= 20;
+            if (button6.Left < -13)
+            {
+                button6.Left = 700;
+            }
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+4.ZADATAAAAK
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace flappy_bird
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+            timer2.Start();
+            button11.Focus();
+            button11.Top = 106;
+            button11.Left = 12;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            button15.Left -= 5;
+            button14.Left -= 5;
+            if(button15.Left<-13)
+            {
+                Random x = new Random();
+                int visina = x.Next(0, 200) + 20;
+                button15.Height = visina;
+                button14.Height = 800;
+                button14.Top = visina + 70; ;
+                button15.Left = 700;
+                button14.Left = 700;
+            }
+
+            button10.Left -= 5;
+            button9.Left -= 5;
+            if (button10.Left < -13)
+            {
+                Random x = new Random();
+                int visina = x.Next(0, 200) + 30;
+                button10.Height = visina;
+                button9.Height = 800;
+                button9.Top = visina + 70; ;
+                button10.Left = 700;
+                button9.Left = 700;
+            }
+
+            button8.Left -= 5;
+            button7.Left -= 5;
+            if (button8.Left < -13)
+            {
+                Random x = new Random();
+                int visina = x.Next(0, 200) + 20;
+                button8.Height = visina;
+                button7.Height = 800;
+                button7.Top = visina + 70; ;
+                button8.Left = 700;
+                button7.Left = 700;
+            }
+
+            button13.Left -= 5;
+            button12.Left -= 5;
+            if (button13.Left < -13)
+            {
+                Random x = new Random();
+                int visina = x.Next(0, 200) + 20;
+                button13.Height = visina;
+                button12.Height = 800;
+                button12.Top = visina + 70; ;
+                button13.Left = 700;
+                button12.Left = 700;
+            }
+
+            if (button11.Bounds.IntersectsWith(button14.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button11.Bounds.IntersectsWith(button15.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button11.Bounds.IntersectsWith(button10.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button11.Bounds.IntersectsWith(button9.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button11.Bounds.IntersectsWith(button9.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button11.Bounds.IntersectsWith(button7.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button11.Bounds.IntersectsWith(button13.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+
+            if (button11.Bounds.IntersectsWith(button12.Bounds))
+            {
+                timer1.Stop();
+                timer2.Stop();
+                MessageBox.Show("GAME OVER");
+            }
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            button11.Top += 5;
+        }
+
+        private void button11_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'w')button11.Top = button11.Top - 20;
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+}
+
+5.ZADATAAAK
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace lavirint
+{
+    public partial class Form1 : Form
+    {
+        List<Button> cvet = new List<Button>();
+        int[,] niz = {
+        { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+{0,  1,  0,  0,  0,  0,  0,  1,  1,  0,  1,  0},
+{0,  1,  0,  0,  1,  1,  0,  0,  0,  1,  0,  0},
+{0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0},
+{0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0},
+{0,  1,  0,  0,  1,  0,  1,  0,  0,  0,  1,  0},
+{0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0},
+{0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0},
+{0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0},
+{0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0},
+{0,  0,  1,  1,  0,  1,  1,  1,  1,  1,  0,  0},
+{0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}};
+
+        List<Button> novo = new List<Button>();
+        int[,] niz2 = {
+        { 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0},
+{0,  1,  0,  0,  0,  0,  0,  1,  1,  0,  1,  0},
+{0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0},
+{0,  1,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0},
+{0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0},
+{0,  1,  0,  0,  0,  0,  1,  0,  1,  0,  1,  0},
+{0,  1,  0,  1,  0,  1,  0,  1,  0,  1,  0,  0},
+{0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0},
+{0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0},
+{0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0},
+{0,  0,  1,  1,  0,  1,  1,  1,  1,  1,  0,  0},
+{0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0}};
+
+        int x = 0, y = 0;
+        int oldx = 0, oldy = 0;
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 12; i++)
+                for (int j = 0; j < 12; j++)
+                {
+                    if (niz[i, j] == 0)
+                    {
+                        Button taster = new Button();
+                        panel2.Controls.Add(taster);
+                        taster.Location = new Point(j * 40 + 10, i * 40 + 10);
+                        Random broj = new Random();
+                        int z1 = broj.Next(0, 255);
+                        int z2 = broj.Next(0, 255);
+                        int z3 = broj.Next(0, 255);
+                        taster.BackColor = System.Drawing.Color.FromArgb(z1, z2, z3);
+                        taster.BackColor = Color.Yellow;
+                        taster.Size = new Size(20, 20);
+                        cvet.Insert(0, taster);
+                    }
+                }
+
+            for (int i = 0; i < 12; i++)
+                for (int j = 0; j < 12; j++)
+                {
+                    if (niz2[i, j] == 1)
+                    {
+                        Button taster = new Button();
+                        panel2.Controls.Add(taster);
+                        taster.Location = new Point(j * 40, i * 40);
+                        taster.BackColor = Color.Blue;
+                        taster.Size = new Size(40, 40);
+                    }
+                    
+                }
+        }
+
+        private void button2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            oldx = x; oldy = y;
+            if (e.KeyChar == 'a') { button2.Left -= 40; x--; }
+            if (e.KeyChar == 's') { button2.Top += 40; y++; }
+            if (e.KeyChar == 'd') { button2.Left += 40; x++; }
+            if (e.KeyChar == 'w') { button2.Top -= 40; y--; }
+
+            if (button2.Left < 0) button2.Left = 0;
+            if (button2.Left > 440) button2.Left = 440;
+            if (button2.Top < 0) button2.Top = 0;
+            if (button2.Top > 440) button2.Top = 440;
+
+            if (niz[y, x] == 1)
+            {
+                x = oldx;
+                y = oldy;
+                button2.Left = x * 40;
+                button2.Top = y * 40;
+            }
+            for(int i=0; i<cvet.Count;i++)
+            {
+                if (button2.Bounds.IntersectsWith(cvet[i].Bounds))
+                {
+                    cvet[i].Dispose();
+                    cvet.Remove(cvet[i]);
+                }
+            }
+            if (cvet.Count == 0) button3.PerformClick();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Random x = new Random();
+            int pravac = x.Next(0, 4);
+            if (pravac == 0) button4.Left -= 40;
+            if (pravac == 1) button4.Top += 40;
+            if (pravac == 2) button4.Left += 40;
+            if (pravac == 3) button4.Top -= 40;
+            if (button2.Left > button4.Left) button4.Left += 40;
+            if (button2.Left < button4.Left) button4.Left -= 40;
+            if (button2.Top > button4.Top) button4.Top += 40;
+            if (button2.Top < button4.Top) button4.Top -= 40;
+        }
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button2.Focus();
+            for (int i = 0; i < 12; i++)
+                for (int j = 0; j < 12; j++)
+                {
+                    if (niz[i, j] == 1)
+                    {
+                        Button taster = new Button();
+                        panel2.Controls.Add(taster);
+                        taster.Location = new Point(j * 40, i * 40);
+                        taster.BackColor = Color.Blue;
+                        taster.Size = new Size(40, 40);
+                    }
+                    if (niz[i, j] == 0)
+                    {
+                        Button taster = new Button();
+                        panel2.Controls.Add(taster);
+                        taster.Location = new Point(j * 40 + 10, i * 40 + 10);
+                        taster.BackColor = Color.Yellow;
+                        taster.Size = new Size(20, 20);
+                        cvet.Insert(0, taster);
+                    }
+                }
+            timer1.Start();
+        }
+    }
+}
+
+
+
+
+6.ZADATAAAK
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace lovac
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            button1.Enabled = true;
+            button1.Focus();
+            timer1.Start();
+            button3.Visible = false;
+
+        }
+
+        private void button1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Point starapozicija = button1.Location;
+            if (e.KeyChar == 'a') button1.Left = button1.Left - 10;
+            if (e.KeyChar == 'd') button1.Left = button1.Left + 10;
+            if (e.KeyChar == 'w') button1.Top = button1.Top - 10;
+            if (e.KeyChar == 's') button1.Top = button1.Top + 10;
+            if (button1.Bounds.IntersectsWith(button10.Bounds))
+            {
+                string s = label1.Text;
+                int poeni = Convert.ToInt16(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+                button10.Left = -60;
+                button10.Top = -30;
+            }
+            if (button1.Bounds.IntersectsWith(button11.Bounds))
+            {
+                string s = label1.Text;
+                int poeni = Convert.ToInt16(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+                button11.Left = -60;
+                button11.Top = -30;
+            }
+            if (button1.Bounds.IntersectsWith(button12.Bounds))
+            {
+                string s = label1.Text;
+                int poeni = Convert.ToInt16(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+                button12.Left = -60;
+                button12.Top = -30;
+            }
+
+            if (button1.Bounds.IntersectsWith(button13.Bounds))
+            {
+                string s = label1.Text;
+                int poeni = Convert.ToInt16(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+                button13.Left = -60;
+                button13.Top = -30;
+            }
+
+            if (button1.Bounds.IntersectsWith(button14.Bounds))
+            {
+                string s = label1.Text;
+                int poeni = Convert.ToInt16(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+                button14.Left = -60;
+                button14.Top = -30;
+            }
+
+            if (button1.Bounds.IntersectsWith(button15.Bounds))
+            {
+                string s = label1.Text;
+                int poeni = Convert.ToInt16(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+                button15.Left = -60;
+                button15.Top = -30;
+            }
+
+            if (button1.Top==72)
+            {
+                button3.Visible = true;
+                button3.Enabled = true;
+                timer2.Start();
+            }
+
+            if (button1.Bounds.IntersectsWith(button5.Bounds))
+            {
+                button1.Location = starapozicija;
+            }
+
+            if (button1.Bounds.IntersectsWith(button6.Bounds))
+            {
+                button1.Location = starapozicija;
+            }
+            if (button1.Bounds.IntersectsWith(button7.Bounds))
+            {
+                button1.Location = starapozicija;
+            }
+            if (button1.Bounds.IntersectsWith(button4.Bounds))
+            {
+                button1.Location = starapozicija;
+            }
+
+            if (button1.Bounds.IntersectsWith(button3.Bounds))
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+            if (button3.Bounds.IntersectsWith(button1.Bounds))
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+            if (button1.Bounds.IntersectsWith(button8.Bounds) && label1.Text=="6")
+            {
+                MessageBox.Show("POBEDIO SI");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+            if (button1.Bounds.IntersectsWith(button8.Bounds) && label1.Text == "5")
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+
+            if (button1.Bounds.IntersectsWith(button8.Bounds) && label1.Text == "4")
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+            if (button1.Bounds.IntersectsWith(button8.Bounds) && label1.Text == "3")
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+            if (button1.Bounds.IntersectsWith(button8.Bounds) && label1.Text == "2")
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+            if (button1.Bounds.IntersectsWith(button8.Bounds) && label1.Text == "1")
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                button1.Enabled = false;
+                button3.Enabled = false;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+
+            Random x = new Random();
+            int pravac = x.Next(0, 4);
+            if (pravac == 0) button3.Left -= 2;
+            if (pravac == 1) button3.Top += 2;
+            if (pravac == 2) button3.Left += 2;
+            if (pravac == 3) button3.Top -= 2;
+
+            if (button1.Left > button3.Left) button3.Left += 2;
+            if (button1.Left < button3.Left) button3.Left -= 2;
+            if (button1.Top > button3.Top) button3.Top += 2;
+            if (button1.Top < button3.Top) button3.Top -= 2;
+        }
+    }
+}
+
+7.ZADATAAK
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace prodavnica
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(1);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(2);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(3);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(4);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(5);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(6);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(6);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(6);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(6);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(6);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int k = listBox1.SelectedIndex;
+            textBox1.Text = listBox1.Items[k].ToString();
+        }
+    }
+}
+8.ZADATAAAAK
+
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace pucanje
+{
+    public partial class Form1 : Form
+    {
+        List<Button> lista2 = new List<Button>();
+        int pravac = 0;
+        int br = 12;
+        int mt = 0;
+        int poeni;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            timer2.Start();
+            if (e.KeyChar == 'a') pravac = 1;
+            if (e.KeyChar == 's') pravac = 2;
+            if (e.KeyChar == 'd') pravac = 3;
+            if (e.KeyChar == 'w') pravac = 4;
+            if(e.KeyChar==' ')
+            {
+                if (mt == 0)
+                {
+                    button3.Left = button2.Left + 17;
+                    button3.Top = button2.Top + 12;
+                    timer1.Start();
+                    mt++;
+                }
+                else
+                    if (mt == 1)
+                {
+                    button4.Left = button2.Left + 17;
+                    button4.Top = button2.Top + 12;
+                    timer3.Start();
+                    mt--;
+                }
+
+                
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            button3.Top -= 5;
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            button2.Focus();
+            button3.Left = button2.Left + 17;
+            button3.Top = button2.Top + 12;
+            button4.Left = button2.Left + 17;
+            button4.Top = button2.Top + 12;
+            label2.Text = "0";
+            timer4.Start();
+            
+
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            if(pravac == 1) button2.Left -=br;
+            if(pravac == 2) button2.Top += br;
+            if(pravac == 3) button2.Left += br;
+            if(pravac == 4) button2.Top -= br;
+
+            
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            button4.Top -= 5;
+        }
+
+        private void timer4_Tick(object sender, EventArgs e)
+        {
+            Random x = new Random();
+            if (button6.Top > 400)
+            {
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+            }
+
+            if (button7.Top > 400)
+            {
+                
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+            }
+            if (button8.Top > 400)
+            {
+                
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+            }
+            if (button8.Top > 400)
+            {
+
+                
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+            }
+
+            if (button8.Top > 400)
+            { 
+                
+                MessageBox.Show("GAME OVER");
+                timer1.Stop();
+                timer2.Stop();
+                timer3.Stop();
+                timer4.Stop();
+            }
+
+           
+
+
+            button6.Top += 2;
+            button7.Top += 3;
+            button8.Top += 4;
+            button9.Top += 5;
+            button10.Top += 6;
+            if (button4.Bounds.IntersectsWith(button6.Bounds))
+            {
+                button6.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz = x.Next(20, 780);
+                button6.Left = duz;
+                button6.Top = 0;
+            }
+            if (button4.Bounds.IntersectsWith(button7.Bounds))
+            {
+                button7.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz1 = x.Next(20, 780);
+                button7.Left = duz1;
+                button7.Top = 0;
+            }
+            if (button4.Bounds.IntersectsWith(button8.Bounds))
+            {
+                button8.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz2 = x.Next(20, 780);
+                button8.Left = duz2;
+                button8.Top = 0;
+            }
+            if (button4.Bounds.IntersectsWith(button9.Bounds))
+            {
+                button9.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz3 = x.Next(20, 780);
+                button9.Left = duz3;
+                button9.Top = 0;
+            }
+            if (button4.Bounds.IntersectsWith(button10.Bounds))
+            {
+                button10.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz4 = x.Next(20, 780);
+                button10.Left = duz4;
+                button10.Top = 0;
+            }
+
+
+
+            if (button3.Bounds.IntersectsWith(button6.Bounds))
+            {
+                button6.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz = x.Next(20, 780);
+                button6.Left = duz;
+                button6.Top = 0;
+            }
+            if (button3.Bounds.IntersectsWith(button7.Bounds))
+            {
+                button7.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz1 = x.Next(20, 780);
+                button7.Left = duz1;
+                button7.Top = 0;
+            }
+            if (button3.Bounds.IntersectsWith(button8.Bounds))
+            {
+                button8.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz2 = x.Next(20, 780);
+                button8.Left = duz2;
+                button8.Top = 0;
+            }
+            if (button3.Bounds.IntersectsWith(button9.Bounds))
+            {
+                button9.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz3 = x.Next(20, 780);
+                button9.Left = duz3;
+                button9.Top = 0;
+            }
+            if (button3.Bounds.IntersectsWith(button10.Bounds))
+            {
+                button10.Left = 1000;
+                string s = label2.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label2.Text = s;
+
+                int duz4 = x.Next(20, 780);
+                button10.Left = duz4;
+                button10.Top = 0;
+            }
+
+        }
+    }
+}
+9.ZADATAAAK
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.IO;
+
+namespace slike
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string folder = @"d:\slike";
+            string[] files = Directory.GetFiles(folder, "*.jpg");
+            int i = 0;
+            while (i < files.Length)
+            {
+                listBox1.Items.Add(Path.GetFileName(files[i]));
+                i++;
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox1_Click(object sender, EventArgs e)
+        {
+            button2.PerformClick();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int k = listBox1.SelectedIndex;
+            string ime = listBox1.Items[k].ToString();
+            ime = @"d:\slike\" + ime;
+            pictureBox1.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime= @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox2.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime = @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox5.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime = @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox8.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime = @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox7.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime = @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox6.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime = @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox11.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime = @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox10.BackgroundImage = Image.FromFile(ime);
+            k++;
+            ime = @"d:\slike\" + listBox1.Items[k].ToString();
+            pictureBox9.BackgroundImage = Image.FromFile(ime);
+            
+            if (k >= 26) listBox1.SelectedIndex = 0;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int k = listBox1.SelectedIndex;
+            k++;
+            listBox1.SelectedIndex = k;
+            button2.PerformClick();
+            if (k >= 26) listBox1.SelectedIndex = 0;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            pictureBox3.BackgroundImage = pictureBox1.BackgroundImage;
+            tabControl1.SelectedIndex = 1;
+        }
+
+        private void pictureBox3_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            pictureBox4.BackgroundImage = pictureBox2.BackgroundImage;
+            tabControl1.SelectedIndex = 2;
+        }
+
+        private void pictureBox4_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox5_Click(object sender, EventArgs e)
+        {
+            pictureBox12.BackgroundImage = pictureBox5.BackgroundImage;
+            tabControl1.SelectedIndex = 3;
+        }
+
+        private void pictureBox8_Click(object sender, EventArgs e)
+        {
+            pictureBox13.BackgroundImage = pictureBox8.BackgroundImage;
+            tabControl1.SelectedIndex = 4;
+        }
+
+        private void pictureBox7_Click(object sender, EventArgs e)
+        {
+            pictureBox14.BackgroundImage = pictureBox7.BackgroundImage;
+            tabControl1.SelectedIndex = 5;
+        }
+
+        private void pictureBox6_Click(object sender, EventArgs e)
+        {
+            pictureBox15.BackgroundImage = pictureBox6.BackgroundImage;
+            tabControl1.SelectedIndex = 6;
+        }
+
+        private void pictureBox11_Click(object sender, EventArgs e)
+        {
+            pictureBox16.BackgroundImage = pictureBox11.BackgroundImage;
+            tabControl1.SelectedIndex = 7;
+        }
+
+        private void pictureBox10_Click(object sender, EventArgs e)
+        {
+            pictureBox17.BackgroundImage = pictureBox10.BackgroundImage;
+            tabControl1.SelectedIndex = 8;
+        }
+
+        private void pictureBox9_Click(object sender, EventArgs e)
+        {
+            pictureBox18.BackgroundImage = pictureBox9.BackgroundImage;
+            tabControl1.SelectedIndex = 9;
+        }
+
+        private void pictureBox12_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox13_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox14_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox15_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox16_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox17_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox18_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void pictureBox19_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 0;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            int k = listBox1.SelectedIndex;
+            k--;
+            listBox1.SelectedIndex = k;
+            button2.PerformClick();
+            if (k <= 0) listBox1.SelectedIndex = 26;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            tabControl1.Appearance = TabAppearance.FlatButtons;
+        }
+    }
+}
+10.ZADATAAAK
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace tab
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+            tabControl1.SelectedTab = tabPage1;
+            tabControl1.Appearance = TabAppearance.FlatButtons;
+            tabControl1.ItemSize = new Size(0, 1);
+            tabControl1.SizeMode = TabSizeMode.Fixed;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(1);
+            progressBar1.Value = 10;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(2);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton1.Checked == true) poeni += 10;
+            if (radioButton2.Checked == true) poeni -= 10;
+            if (radioButton3.Checked == true) poeni -= 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 20;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton5_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton4_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButton6_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(3);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton6.Checked == true) poeni += 10;
+            if (radioButton5.Checked == true) poeni -= 10;
+            if (radioButton4.Checked == true) poeni -= 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 30;
+        }
+
+        private void label23_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(4);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton9.Checked == true) poeni -= 10;
+            if (radioButton8.Checked == true) poeni += 10;
+            if (radioButton7.Checked == true) poeni -= 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 40;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(5);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton12.Checked == true) poeni -= 10;
+            if (radioButton11.Checked == true) poeni -= 10;
+            if (radioButton10.Checked == true) poeni += 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 50;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(6);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton14.Checked == true) poeni -= 10;
+            if (radioButton13.Checked == true) poeni -= 10;
+            if (radioButton15.Checked == true) poeni += 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 60;
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(7);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton18.Checked == true) poeni += 10;
+            if (radioButton17.Checked == true) poeni -= 10;
+            if (radioButton16.Checked == true) poeni -= 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 70;
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(8);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton21.Checked == true) poeni -= 10;
+            if (radioButton20.Checked == true) poeni -= 10;
+            if (radioButton19.Checked == true) poeni += 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 80;
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(9);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton24.Checked == true) poeni += 10;
+            if (radioButton23.Checked == true) poeni -= 10;
+            if (radioButton22.Checked == true) poeni -= 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 90;
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(10);
+            int poeni = Convert.ToInt32(label3.Text);
+            if (radioButton27.Checked == true) poeni += 10;
+            if (radioButton26.Checked == true) poeni -= 10;
+            if (radioButton25.Checked == true) poeni -= 10;
+            label3.Text = Convert.ToString(poeni);
+            progressBar1.Value = 100;
+            if (poeni > 85) label15.Text = "5";
+            if (85 >poeni && poeni > 65) label15.Text = "4";
+            if (65 > poeni && poeni > 45) label15.Text = "3";
+            if (45 > poeni && poeni > 25) label15.Text = "2";
+            if (25 > poeni && poeni > 0) label15.Text = "1";
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            tabControl1.SelectTab(0);
+        }
+    }
+}
+11.ZADATAAAK
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace ugao
+{
+    public partial class Form1 : Form
+    {
+        int px = -1, py = -1;
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            timer1.Start();
+            button2.Enabled=true;
+            button3.Enabled = true;
+            button3.Focus();
+            label1.Text = "0";
+
+            button4.Visible = true;
+            button5.Visible = true;
+            button6.Visible = true;
+            button7.Visible = true;
+            button8.Visible = true;
+            button9.Visible = true;
+            button10.Visible = true;
+            button11.Visible = true;
+            button12.Visible = true;
+            button13.Visible = true;
+            button14.Visible = true;
+            button15.Visible = true;
+            button16.Visible = true;
+            button17.Visible = true;
+            button18.Visible = true;
+            button19.Visible = true;
+            button20.Visible = true;
+            button21.Visible = true;
+            button22.Visible = true;
+            button23.Visible = true;
+            button24.Visible = true;
+            button25.Visible = true;
+            button26.Visible = true;
+            button27.Visible = true;
+            button28.Visible = true;
+            button29.Visible = true;
+            button30.Visible = true;
+            button31.Visible = true;
+            button32.Visible = true;
+            button33.Visible = true;
+            button34.Visible = true;
+            button35.Visible = true;
+            button36.Visible = true;
+            button37.Visible = true;
+            button38.Visible = true;
+            button39.Visible = true;
+            button40.Visible = true;
+            button41.Visible = true;
+            button42.Visible = true;
+            button43.Visible = true;
+            
+        }
+
+        private void button3_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'a') button3.Left = button3.Left - 10;
+            if (e.KeyChar == 'd') button3.Left = button3.Left + 10;
+            
+            
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (button2.Top < 0) py = py * -1;
+            if (button2.Left < 0) px = px * -1;
+            if (button2.Left > 800) px = px * -1;
+
+            if ((px == 1) && (py == 1)) { button2.Left += 3; button2.Top -= 3; }
+            if ((px == 1) && (py == -1)) { button2.Left += 3; button2.Top += 3; }
+            
+            if ((px == -1) && (py == 1)) { button2.Left -= 3; button2.Top -= 3; }
+            if ((px == -1) && (py == -1)) { button2.Left -= 3; button2.Top += 3; }
+
+            if (button2.Bounds.IntersectsWith(button3.Bounds))
+            {
+                if ((button2.Top < button3.Top) || (button2.Top > button3.Top))
+                    py = py * -1;
+            }
+            if (button2.Bounds.IntersectsWith(button4.Bounds))
+            {
+                button4.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button5.Bounds))
+            {
+                button5.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button6.Bounds))
+            {
+                button6.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button7.Bounds))
+            {
+                button7.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button8.Bounds))
+            {
+                button8.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button9.Bounds))
+            {
+                button9.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button10.Bounds))
+            {
+                button10.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button11.Bounds))
+            {
+                button11.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button12.Bounds))
+            {
+                button12.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button13.Bounds))
+            {
+                button13.Left = -1000;
+                py = py * -1;
+            }
+            if (button2.Bounds.IntersectsWith(button14.Bounds))
+            {
+                button14.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button15.Bounds))
+            {
+                button15.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button16.Bounds))
+            {
+                button16.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button17.Bounds))
+            {
+                button17.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            
+
+
+            if (button2.Bounds.IntersectsWith(button18.Bounds))
+            {
+                button18.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button19.Bounds))
+            {
+                button19.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button20.Bounds))
+            {
+                button20.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button21.Bounds))
+            {
+                button21.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button22.Bounds))
+            {
+                button22.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button23.Bounds))
+            {
+                button23.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button24.Bounds))
+            {
+                button24.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button25.Bounds))
+            {
+                button25.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button26.Bounds))
+            {
+                button26.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button27.Bounds))
+            {
+                button27.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button28.Bounds))
+            {
+                button28.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button29.Bounds))
+            {
+                button29.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button30.Bounds))
+            {
+                button30.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button31.Bounds))
+            {
+                button31.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button32.Bounds))
+            {
+                button32.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button33.Bounds))
+            {
+                button33.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button34.Bounds))
+            {
+                button34.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button35.Bounds))
+            {
+                button35.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button36.Bounds))
+            {
+                button36.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button37.Bounds))
+            {
+                button37.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button38.Bounds))
+            {
+                button38.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button39.Bounds))
+            {
+                button39.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+
+            if (button2.Bounds.IntersectsWith(button40.Bounds))
+            {
+                button40.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button41.Bounds))
+            {
+                button41.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button42.Bounds))
+            {
+                button42.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Bounds.IntersectsWith(button43.Bounds))
+            {
+                button43.Left = -1000;
+                py = py * -1;
+                string s = label1.Text;
+                int poeni = Convert.ToInt32(s);
+                poeni++;
+                s = Convert.ToString(poeni);
+                label1.Text = s;
+            }
+            if (button2.Top > 400)
+            {
+                MessageBox.Show("game over");
+                timer1.Stop();
+            }
+        }
+    }
+}

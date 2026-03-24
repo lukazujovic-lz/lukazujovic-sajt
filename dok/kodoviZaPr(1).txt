@@ -1015,874 +1015,1476 @@ return 0;
 
 
 
-Zadatak 29: Interaktivni rad sa binarnom datotekom tačakaNapraviti program koji radi sa binarnom datotekom tacke.bin. Program treba da sadrži korisnički meni sa sledećim opcijama: ispis svih tačaka sačuvanih u fajlu, dodavanje određenog broja novih tačaka na kraj postojećeg fajla, generisanje potpuno novog fajla sa slučajnim koordinatama i pronalaženje tačke koja je na najmanjoj udaljenosti od koordinatnog početka.
+
+29.
+Odrediti koja je tacka najbliza kooridnantnom pocetku.
 
 
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-#include <cmath>
 
-using namespace std;
 
-struct tacka {
-    int x, y;
-};
+        struct tacka{
+        int x,y;
+        };
+        int main()
+        {
+        FILE *pok;
+        tacka a;
+        srand(time(0));
+        int i,x,mini;
+        pok=fopen("tacke.bin","wb");
+        for(i=0;i < 10;i++)
+        {
+        a.x=rand()%100;
+        a.y=rand()%100;
+        fwrite(&a,sizeof(a),1,pok);
+        }
+        fclose(pok);
+        i=1;
+        pok=fopen("tacke.bin", "rb");
+        while(feof(pok)==0)
+        {
+        fread(&a,sizeof(a),1,pok);
+        if(feof(pok)==0) printf("%d. tacka je x=%d i y=%d \n",i,a.x,a.y);
+        i++;
+        }
+        mini=a.x*a.y;
+        for(i=0;i < 10;i++){
+        if(a.x*a.y < mini)
+        mini=a.x*a.y;
+        }
+        printf("Najmanji clan je %d",mini);
+        fclose(pok);
+        return 0;
+        }
 
-void ispis() {
-    FILE *pok = fopen("tacke.bin", "rb");
-    tacka a;
-    if (pok == NULL) return;
-    
-    printf("\n--- Sadrzaj fajla ---\n");
-    while (fread(&a, sizeof(a), 1, pok)) {
-        printf("Tacka: x=%d, y=%d\n", a.x, a.y);
-    }
-    fclose(pok);
-}
+30.
+    Korisnik unese broj k i na broj binarnog fajla se doda jos k random tacaka. Pa se ispisu na ekranu.
 
-void dodaj(int n) {
-    FILE *pok = fopen("tacke.bin", "ab"); // "ab" za dodavanje na kraj
-    tacka a;
-    for (int i = 0; i < n; i++) {
-        a.x = rand() % 100;
-        a.y = rand() % 100;
-        fwrite(&a, sizeof(a), 1, pok);
-    }
-    fclose(pok);
-}
 
-void generator(int n) {
-    FILE *pok = fopen("tacke.bin", "wb"); // "wb" pravi nov fajl
-    tacka a;
-    for (int i = 0; i < n; i++) {
-        a.x = rand() % 100;
-        a.y = rand() % 100;
-        fwrite(&a, sizeof(a), 1, pok);
-    }
-    fclose(pok);
-}
-
-void najbliza() {
-    FILE *pok = fopen("tacke.bin", "rb");
-    tacka a;
-    float mini = 1000000, d;
-    int pozu = -1, i = 0;
-    
-    while (fread(&a, sizeof(a), 1, pok)) {
-        d = sqrt(a.x * a.x + a.y * a.y);
-        if (d < mini) {
-            mini = d;
-            pozu = i;
+        struct tacka{
+        int x,y;
+        };
+        int main()
+        {
+        FILE *pok;
+        tacka a;
+        srand(time(0));
+        int i,x,k,poz;
+        float z, mini=10000000;
+        printf("Unesite broj k:");
+        scanf("%d",&k);
+        pok=fopen("tacke.bin","wb");
+        for(i=0;i < 10+k;i++)
+        {
+        a.x=rand()%100;
+        a.y=rand()%100;
+        fwrite(&a,sizeof(a),1,pok);
+        }
+        fclose(pok);
+        i=1;
+        pok=fopen("tacke.bin", "rb");
+        while(feof(pok)==0)
+        {
+        fread(&a,sizeof(a),1,pok);
+        if(feof(pok)==0) {
+        printf("%d. tacka je x=%d i y=%d \n",i,a.x,a.y);
+        z=sqrt(a.x*a.x+a.y*a.y);
+        if(z < mini)
+        {
+        mini=z;
+        poz=i;
+        }
         }
         i++;
-    }
-    printf("\nNajbliza tacka je na poziciji %d, udaljenost: %.2f\n", pozu, mini);
-    fclose(pok);
-}
-
-void meni() {
-    printf("\n1. Ispis svih clanova FAJLA");
-    printf("\n2. Dodaj nove clanove na kraj");
-    printf("\n3. Generisi potpuno novi fajl");
-    printf("\n4. Pronadji najblizu tacku");
-    printf("\n0. KRAJ\n Izbor: ");
-}
-
-int main() {
-    srand(time(0));
-    int izbor = -1, koliko;
-    
-    while (izbor != 0) {
-        meni();
-        scanf("%d", &izbor);
-        
-        if (izbor == 1) ispis();
-        else if (izbor == 2) {
-            printf("Koliko tacaka dodati? ");
-            scanf("%d", &koliko);
-            dodaj(koliko);
         }
-        else if (izbor == 3) {
-            printf("Koliko tacaka generisati? ");
-            scanf("%d", &koliko);
-            generator(koliko);
+        printf("Najbliza tacka je na poziciji %d i vrednost je %f",poz,mini);
+        fclose(pok);
+        return 0;
         }
-        else if (izbor == 4) najbliza();
-    }
-    return 0;
-}
+
+31.    
+Formirati klasu primer koja ima staticke promenljive broj i javnu funkciju brojac. Promenljiva tipa static mora se inicijalizovati pre pocetka programa.
 
 
-
-
-Zadatak 30: Upotreba statičkih članova klase (Potrošnja goriva)Definisati klasu automobil koja ima atribute za prosečnu potrošnju i pređeni put. Uvesti statičku promenljivu cenagoriva koja je zajednička za sve objekte klase. U glavnom programu uneti podatke za tri različita automobila, izračunati ukupne troškove puta za svaki i odrediti koji je automobil najekonomičniji.
-
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-class automobil {
-public:
-    float potrosnja, put;
-    static float cenagoriva; // Zajednicka za sve
-
-    float trosak() {
-        return (put * potrosnja / 100);
-    }
-};
-
-float automobil::cenagoriva = 184.0; // Inicijalizacija staticke promenljive
-
-int main() {
-    automobil pezo, punto, skoda;
-    
-    printf("Unesi potrosnju i put za Pezo: ");
-    scanf("%f %f", &pezo.potrosnja, &pezo.put);
-    printf("Unesi potrosnju i put za Punto: ");
-    scanf("%f %f", &punto.potrosnja, &punto.put);
-    printf("Unesi potrosnju i put za Skodu: ");
-    scanf("%f %f", &skoda.potrosnja, &skoda.put);
-
-    float p1 = pezo.trosak() * automobil::cenagoriva;
-    float p2 = punto.trosak() * automobil::cenagoriva;
-    float p3 = skoda.trosak() * automobil::cenagoriva;
-
-    printf("\nTroskovi: Pezo: %.2f, Punto: %.2f, Skoda: %.2f\n", p1, p2, p3);
-
-    if (p1 < p2 && p1 < p3) printf("Najmanje je potrosio Pezo.\n");
-    else if (p2 < p1 && p2 < p3) printf("Najmanje je potrosio Punto.\n");
-    else printf("Najmanje je potrosio Skoda.\n");
-
-    return 0;
-}
-
-
-Zadatak 31: Niz objekata i zapremina (Klasa Balvan)Napraviti klasu balvan čiji konstruktor postavlja vrednosti za obim i visinu. Kreirati niz od 100 objekata ove klase, pri čemu se dimenzije generišu slučajno. Izračunati zapreminu svakog balvana i na kraju ispisati vrednost najveće zapremine i redni broj tog balvana u nizu
-
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <ctime>
-
-using namespace std;
-
-class balvan {
-protected:
-    float obim, visina;
-public:
-    // Konstruktor
-    balvan(float a, float b) {
-        obim = a;
-        visina = b;
-    }
-    
-    float zapremina() {
-        // r = obim / (2 * PI) -> V = r^2 * PI * visina
-        float r = obim / 6.28;
-        return r * r * 3.14 * visina;
-    }
-};
-
-int main() {
-    srand(time(0));
-    float niz[100];
-    float max_zapremina = 0;
-    int indeks_najveceg = 0;
-
-    for (int i = 0; i < 100; i++) {
-        float o = (rand() % 100) + 1;
-        float v = (rand() % 100) + 1;
-        
-        balvan x(o, v);
-        niz[i] = x.zapremina();
-        
-        if (niz[i] > max_zapremina) {
-            max_zapremina = niz[i];
-            indeks_najveceg = i;
+        class primer{
+        public:
+        static int broj;
+        void brojac(){
+        broj++;
         }
-    }
-
-    printf("Najveca zapremina balvana je: %.2f (Balvan br. %d)\n", max_zapremina, indeks_najveceg);
-    
-    return 0;
-}
-
-Zadatak 32: Konstruktori i proračun pritiska telaNapraviti klasu telo koja preko konstruktora sa parametrima unosi masu i površinu oslonca. Napisati funkciju koja računa pritisak tela na podlogu po formuli $P = (m \cdot g) / S$. U glavnom programu uporediti pritisak dva različita tela i ispisati oba rezultata.
-
-
-#include <iostream>
-#include <cstdio>
-
-class telo {
-private:
-    float masa, povrsina;
-public:
-    // Konstruktor sa parametrima
-    telo(float x, float y) {
-        masa = x;
-        povrsina = y;
-    }
-    
-    float pritisak() {
-        return (masa * 9.81) / povrsina;
-    }
-};
-
-int main() {
-    float m1, p1, m2, p2;
-    
-    printf("Unesi masu (kg) i povrsinu (m2) za prvo telo: ");
-    scanf("%f %f", &m1, &p1);
-    telo a(m1, p1);
-
-    printf("Unesi masu (kg) i povrsinu (m2) za drugo telo: ");
-    scanf("%f %f", &m2, &p2);
-    telo b(m2, p2);
-
-    printf("\nPritisak tela A je: %.2f Pa", a.pritisak());
-    printf("\nPritisak tela B je: %.2f Pa\n", b.pritisak());
-
-    return 0;
-}
-
-
-Zadatak 33: Pozicioniranje u binarnom fajlu pomoću fseekNapisati program koji omogućava direktan pristup podacima u binarnoj datoteci. Korisnik treba da unese redni broj (indeks) podatka, a program pomoću funkcije fseek treba da "skoči" direktno na tu poziciju i pročita koordinate tačke bez čitanja celog fajla od početka.
-
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-struct tacka {
-    int x, y;
-};
-
-void citaj_sa_pozicije(int n) {
-    FILE *pok = fopen("tacke.bin", "rb");
-    if (pok == NULL) {
-        printf("Greska pri otvaranju fajla!\n");
-        return;
-    }
-
-    tacka a;
-    // fseek pomera kursor na n-ti slog u fajlu
-    // sizeof(tacka) je velicina jednog sloga, a n je redni broj
-    fseek(pok, n * sizeof(tacka), SEEK_SET);
-
-    if (fread(&a, sizeof(tacka), 1, pok)) {
-        printf("Tacka na poziciji %d je: x=%d, y=%d\n", n, a.x, a.y);
-    } else {
-        printf("Ne postoji podatak na toj poziciji.\n");
-    }
-
-    fclose(pok);
-}
-
-int main() {
-    int poz;
-    printf("Unesite poziciju tacke koju zelite da procitate: ");
-    scanf("%d", &poz);
-    citaj_sa_pozicije(poz);
-    return 0;
-}
-
-Zadatak 34: Polimorfizam i apstraktne klase (Plate radnika)Definisati apstraktnu osnovnu klasu radnik sa čisto virtuelnim funkcijama za učitavanje, računanje plate i ispis. Iz nje izvesti klase prodavac (plata se računa po radnim satima) i menadzer (plata se sastoji od fiksnog dela i procenta bonusa). Demonstrirati rad koristeći pokazivač osnovne klase i dinamičku dodelu memorije (new).
-
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-class radnik {
-public:
-    virtual void ucitavanje() = 0;
-    virtual float plata() = 0;
-    virtual void ispis() = 0;
-};
-
-class prodavac : public radnik {
-private:
-    float cena_sata, broj_sati;
-public:
-    void ucitavanje() {
-        printf("Unesi cenu sata za prodavca: ");
-        scanf("%f", &cena_sata);
-        printf("Unesi broj radnih sati: ");
-        scanf("%f", &broj_sati);
-    }
-    float plata() {
-        return cena_sata * broj_sati;
-    }
-    void ispis() {
-        printf("Plata prodavca iznosi: %.2f\n", plata());
-    }
-};
-
-class menadzer : public radnik {
-private:
-    float fiksni_deo, procenat;
-public:
-    void ucitavanje() {
-        printf("Unesi fiksni deo plate menadzera: ");
-        scanf("%f", &fiksni_deo);
-        printf("Unesi procenat od prodaje (0-1): ");
-        scanf("%f", &procenat);
-    }
-    float plata() {
-        // Menadzer dobija fiksni deo + bonus (primer bonusa)
-        return fiksni_deo + (fiksni_deo * procenat);
-    }
-    void ispis() {
-        printf("Plata menadzera iznosi: %.2f\n", plata());
-    }
-};
-
-int main() {
-    int izbor;
-    printf("Izaberite tip radnika (1-Prodavac, 2-Menadzer): ");
-    scanf("%d", &izbor);
-
-    radnik* r = nullptr;
-
-    if (izbor == 1) {
-        r = new prodavac();
-    } else if (izbor == 2) {
-        r = new menadzer();
-    }
-
-    if (r != nullptr) {
-        r->ucitavanje();
-        r->ispis();
-        delete r;
-    }
-
-    return 0;
-}
-
-Zadatak 35: Nasleđivanje i geometrijska tela (Kupa)Napraviti osnovnu klasu osnova koja sadrži zaštićeni atribut za poluprečnik r. Iz nje izvesti klasu kupa koja dodaje atribut za visinu h. Omogućiti unos podataka za poluprečnik i visinu, a zatim izračunati i ispisati zapreminu kupe.
-
-#include <iostream>
-#include <cstdio>
-#include <cmath>
-
-class osnova {
-protected:
-    float r;
-public:
-    void ucitaj_r() {
-        printf("Unesi poluprecnik (r): ");
-        scanf("%f", &r);
-    }
-};
-
-class kupa : public osnova {
-private:
-    float h;
-public:
-    void ucitaj_h() {
-        printf("Unesi visinu (h): ");
-        scanf("%f", &h);
-    }
-    float zapremina() {
-        return (1.0/3.0) * r * r * 3.14 * h;
-    }
-    void ispis() {
-        printf("Zapremina kupe je: %.2f\n", zapremina());
-    }
-};
-
-int main() {
-    kupa k;
-    k.ucitaj_r();
-    k.ucitaj_h();
-    k.ispis();
-    return 0;
-}
-
-Zadatak 36: Niz objekata i filtriranje podataka (Pravougaonik)Napisati program koji omogućava unos podataka (stranice a i b) za 10 objekata klase pravougaonik. Nakon unosa, program treba da prođe kroz niz i ispiše dimenzije i površinu samo onih pravougaonika čija je površina strogo veća od 20.
-
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-class pravougaonik {
-private:
-    float a, b;
-public:
-    void ucitaj() {
-        printf("Unesi stranice a i b: ");
-        scanf("%f %f", &a, &b);
-    }
-    float povrsina() {
-        return a * b;
-    }
-    void ispis() {
-        printf("Pravougaonik (%.2f x %.2f), P = %.2f\n", a, b, povrsina());
-    }
-};
-
-int main() {
-    pravougaonik niz[10];
-
-    // Unos 10 objekata
-    for(int i = 0; i < 10; i++) {
-        printf("Pravougaonik br. %d:\n", i + 1);
-        niz[i].ucitaj();
-    }
-
-    printf("\nPravougaonici sa povrsinom vecom od 20:\n");
-    for(int i = 0; i < 10; i++) {
-        if(niz[i].povrsina() > 20) {
-            niz[i].ispis();
+        };
+        int primer::broj=10;
+        int main()
+        {
+        primer a,b;
+        printf("\n broj je: %d",a.broj);
+        printf("\n broj je: %d",b.broj);
+        a.brojac();
+        printf("\n broj je: %d",a.broj);
+        printf("\n broj je: %d",b.broj);
+        b.brojac();
+        printf("\n broj je: %d",a.broj);
+        printf("\n broj je: %d",b.broj);
+        return 0;
         }
-    }
-
-    return 0;
-}
-
-Zadatak 37:KRUG I KVADRAT
-
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-// Prototip klase krug da bi kvadrat znao da ona postoji
-class krug;
-
-class kvadrat {
-private:
-    float a;
-public:
-    kvadrat(float x) { a = x; }
-    float povrsina() { return a * a; }
-    friend void uporedi(kvadrat kv, krug kr);
-};
-
-class krug {
-private:
-    float r;
-public:
-    krug(float x) { r = x; }
-    float povrsina() { return r * r * 3.14; }
-    friend void uporedi(kvadrat kv, krug kr);
-};
-
-void uporedi(kvadrat kv, krug kr) {
-    if(kv.povrsina() > kr.povrsina())
-        printf("Kvadrat ima vecu povrsinu.\n");
-    else
-        printf("Krug ima vecu povrsinu.\n");
-}
-
-int main() {
-    kvadrat kv(5); // P = 25
-    krug kr(3); // P = 28.26
-    uporedi(kv, kr);
-    return 0;
-}
-
-
-
-Zadatak 38:Vektor klasa
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-class vektor {
-public:
-    int x, y;
     
-    vektor(int a = 0, int b = 0) {
-        x = a;
-        y = b;
-    }
 
-    // Preklapanje operatora +
-    vektor operator+(vektor const &obj) {
-        vektor rez;
-        rez.x = x + obj.x;
-        rez.y = y + obj.y;
-        return rez;
-    }
 
-    void ispis() {
-        printf("Vektor: (%d, %d)\n", x, y);
-    }
-};
+32.
+Formirati klasu automobil koja ima static promenljivu cena goriva i javne promenljive potrosnja i put i javnu funkciju trosak koja izracunava koliko je para potroseno za taj predjeni put.
 
-int main() {
-    vektor v1(10, 5), v2(2, 4);
-    vektor v3 = v1 + v2; // Poziva operator+
-    
-    v3.ispis();
-    return 0;
-}
+Definisati 3 objekta pezo, punto, skoda i odrediti koji je najmanji.
 
-Zadatak 39:ocene i ucenik
-#include <iostream>
-#include <cstdio>
-#include <cstring>
 
-using namespace std;
-
-class ucenik {
-public:
-    char ime[20];
-    int ocena;
-
-    void ucitaj() {
-        printf("Ime: ");
-        scanf("%s", ime);
-        printf("Ocena: ");
-        scanf("%d", &ocena);
-    }
-};
-
-int main() {
-    FILE *f = fopen("skola.bin", "wb");
-    ucenik u;
-
-    for(int i = 0; i < 3; i++) {
-        u.ucitaj();
-        fwrite(&u, sizeof(ucenik), 1, f);
-    }
-    fclose(f);
-
-    // Citaj i trazi odlicne (ocena 5)
-    f = fopen("skola.bin", "rb");
-    printf("\nOdlicni ucenici:\n");
-    while(fread(&u, sizeof(ucenik), 1, f)) {
-        if(u.ocena == 5) {
-            printf("%s ima ocenu 5\n", u.ime);
+        class automobil{
+        public:
+        static float cenagoriva;
+        float potrosnja,put;
+        float trosak(){
+        return potrosnja*put/100;
         }
-    }
-    fclose(f);
+        };
 
-    return 0;
-}
+        float automobil::cenagoriva=187;
+        int main()
+        {
+        automobil pezo,punto,skoda;
+        printf("\n Unesi koliko trosi pezo");
+        scanf("%f", &pezo.potrosnja);
+        printf("\n Unesi koliko trosi punto");
+        scanf("%f", &punto.potrosnja);
+        printf("\n Unesi koliko trosi skoda");
+        scanf("%f", &skoda.potrosnja);
 
-Zadatak 40:plata,cena sati i bonus radnik klasa 
+        printf("\n Unesi predjeni put za pezo");
+        scanf("%f", &pezo.put);
+        printf("\n Unesi predjeni put za punto");
+        scanf("%f", &punto.put);
+        printf("\n Unesi predjeni put za skodu");
+        scanf("%f", &skoda.put);
 
+        float p1,p2,p3;
+        p1=pezo.trosak()*pezo.cenagoriva;
+        p2=punto.trosak()*punto.cenagoriva;
+        p3=skoda.trosak()*skoda.cenagoriva;
 
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-class radnik {
-public:
-    virtual void ucitavanje() = 0;
-    virtual float plata() = 0;
-};
-
-class radnik_procenat : public radnik {
-private:
-    float fiksno, promet, procenat;
-public:
-    void ucitavanje() override {
-        printf("Unesi fiksni deo plate: ");
-        scanf("%f", &fiksno);
-        printf("Unesi ostvareni promet: ");
-        scanf("%f", &promet);
-        printf("Unesi procenat (npr. 0.05 za 5%%): ");
-        scanf("%f", &procenat);
-    }
-    
-    float plata() override {
-        return fiksno + (promet * procenat);
-    }
-};
-
-int main() {
-    radnik_procenat rp;
-    rp.ucitavanje();
-    printf("\nUkupna plata radnika je: %.2f\n", rp.plata());
-    return 0;
-}
-Zadatak 41:
-#include <iostream>
-#include <cstdio>
-#include <cstring>
-
-using namespace std;
-
-struct ucenik {
-    char ime[30];
-    int ocena;
-};
-
-void pretraga_po_imenu() {
-    FILE *f = fopen("skola.bin", "rb");
-    if (f == NULL) return;
-
-    ucenik u;
-    char trazeno_ime[30];
-    int nadjen = 0;
-
-    printf("Unesite ime ucenika za pretragu: ");
-    scanf("%s", trazeno_ime);
-
-    while (fread(&u, sizeof(ucenik), 1, f)) {
-        // strcmp vraca 0 ako su stringovi identicni
-        if (strcmp(u.ime, trazeno_ime) == 0) {
-            printf("Nadjen: %s, Ocena: %d\n", u.ime, u.ocena);
-            nadjen = 1;
-            break; // Prekidamo kad nadjemo prvog
+        printf("\n Potrosnja automobila je %10.2f %10.2f %10.2f",p1,p2,p3);
+        if((p1 < p2)&&(p1 < p3)) printf("\n Najmanje je potrosio Pezo");
+        if((p2 < p1)&&(p2 < p3)) printf("\n Najmanje je potrosio Punto");
+        if((p3 < p1)&&(p3 < p2)) printf("\n Najmanje je potrosila Skoda");
+        return 0;
         }
-    }
+    
 
-    if (!nadjen) {
-        printf("Ucenik sa imenom %s nije u bazi.\n", trazeno_ime);
-    }
-
-    fclose(f);
-}
-
-int main() {
-    // Pretpostavljamo da fajl skola.bin vec postoji iz prethodnih zadataka
-    pretraga_po_imenu();
-    return 0;
-}
+33.
+Formirati klasu telo koja ima podatke o masi i povrsini tela kojim pritiska podlogu i funkciju za izracunavanje pritiska, definisati jedan objekat i izracunati pritisak tog tela na podlogu.
 
 
-Zadatak 42:Klasa figura
-#include <iostream>
-#include <cstdio>
+        class telo
+        {
+        private:
+        float masa, povrsina;
+        public:
+        telo(float m, float p)
+        {
+        masa = m;
+        povrsina = p;
+        }
+        float pritisak()
+        {
+        return masa * 9.81 / povrsina;
+        }
+        };
 
-using namespace std;
+        int main()
+        {
+        telo a(50, 0.25);
+        printf("Pritisak tela na podlogu je %.2f N/m^2\n", a.pritisak());
+        float p1, p2;
+        printf("Unesite masu\n");
+        scanf("%f",&p1);
+        printf("Unesite povrsinu\n");
+        scanf("%f",&p2);
+        telo b(p1,p2);
+        printf("Pritisak tela na podlogu je %.2f N/m^2\n", b.pritisak());
+        return 0;
+        }
+    
 
-class figura {
-public:
-    virtual void ucitavanje() = 0;
-    virtual float povrsina() = 0;
-};
+Formirati klasu balvan sa podacima o obimu osnove i visini i funkciju za izracunavanje zapremine.
 
-class pravougaonik : public figura {
-private:
-    float a, b;
-public:
-    void ucitavanje() {
-        printf("Unesi str. a: \n");
-        scanf("%f", &a);
-        printf("Unesi str. b: \n");
-        scanf("%f", &b);
-    }
-    float povrsina() {
-        return a * b;
-    }
-};
-
-int main() {
-    pravougaonik x;
-    x.ucitavanje();
-    printf("\nPovrsina pravougaonika je %.2f", x.povrsina());
-    return 0;
-}
-
-Zadatak 43:klasa radnik
-
-#include <iostream>
-#include <cstdio>
-
-class radnik {
-public:
-    virtual void ucitavanje() = 0;
-    virtual float plata() = 0;
-};
-
-class programer : public radnik {
-private:
-    float a, b; // a - broj sati, b - cena po satu
-public:
-    void ucitavanje() {
-        printf("Unesi br. sati: \n");
-        scanf("%f", &a);
-        printf("Unesi cenu po satu: \n");
-        scanf("%f", &b);
-    }
-    float plata() {
-        return a * b;
-    }
-};
-
-int main() {
-    programer x;
-    x.ucitavanje();
-    printf("\nPlata radnika je %.2f", x.plata());
-    return 0;
-}
-Zadatak 44:klasa student
-
-#include <iostream>
-#include <cstdio>
-
-using namespace std;
-
-class student {
-public:
-    virtual void ucitavanje() = 0;
-    virtual float prosek() = 0;
-    virtual void ispis() = 0;
-};
-
-class osnovnestudije : public student {
-private:
-    float o1, o2;
-public:
-    void ucitavanje() {
-        printf("Unesi prvu ocenu: \n");
-        scanf("%f", &o1);
-        printf("Unesi drugu ocenu: \n");
-        scanf("%f", &o2);
-    }
-    float prosek() {
-        return (o1 + o2) / 2;
-    }
-    void ispis() {
-        printf("\nProsek je: %.2f", prosek());
-    }
-};
-
-class masterstudije : public student {
-private:
-    float o1, o2, o3;
-public:
-    void ucitavanje() {
-        printf("Unesi prvu ocenu: \n");
-        scanf("%f", &o1);
-        printf("Unesi drugu ocenu: \n");
-        scanf("%f", &o2);
-        printf("Unesi trecu ocenu: \n");
-        scanf("%f", &o3);
-    }
-    float prosek() {
-        return (o1 + o2 + o3) / 3;
-    }
-    void ispis() {
-        printf("\nProsek je: %.2f", prosek());
-    }
-};
-
-int main() {
-    int izbor;
-    printf("Izaberi vrstu studija: \n");
-    printf("1 - OSN STD \n");
-    printf("2 - MASTER STD \n");
-    scanf("%d", &izbor);
-
-    if (izbor == 1) {
-        osnovnestudije x;
-        x.ucitavanje();
-        x.ispis();
-    }
-    if (izbor == 2) {
-        masterstudije y;
-        y.ucitavanje();
-        y.ispis();
-    }
-    return 0;
-}
-
-#include <iostream>
-#include <cstdio>
-
-#define pf printf
-#define sf scanf
-
-class radnik {
-public:
-    virtual void ucitavanje() = 0;
-    virtual float plata() = 0;
-    virtual void ispis() = 0;
-};
-
-class prodavac : public radnik {
-private:
-    float cena, sati;
-public:
-    void ucitavanje() {
-        pf("Unesi cenu po satu: \n");
-        sf("%f", &cena);
-        pf("Unesi koliko sati je radio: \n");
-        sf("%f", &sati);
-    }
-    float plata() {
-        return cena * sati;
-    }
-    void ispis() {
-        pf("\nPlata prodavca je: %.2f", plata());
-    }
-};
-
-// Klasa menadzer je zapoceta na slici, princip je isti kao kod prodavca
-45.interfejsi
+Covek ode na pijac i kupi 100 balvana i sve podatke upise u niz sa konstruktorom. Odrediti zapreminu najveceg balvana.
 
 
-#include <iostream>
-#include <cstdio>
+        class balvan
+        {
+        private:
+        float obim, visina;
+        public:
+        balvan(float a, float b)
+        {
+        obim=a;
+        visina=b;
+        }
+        float zapremina()
+        {
+        return (obim/6.28)*(obim/6.28)*3.14*visina;
+        }
+        };
 
-class oblik {
-public:
-    virtual void ucitavanje() = 0;
-    virtual float povrsina() = 0;
-    virtual ~oblik() {}
-};
+        int main()
+        {
+        srand(time(0))
+        float ol,vl,maxi=0;
+        float niz[100];
+        for(int i=0; i < 100; i++)
+        {
+        ol=rand()%100+1;
+        vl=rand()%100+1;
+        }
+        printf("\n Zapremina balvana %d=%10.2f\n",i+1,niz[i]);
+        if(maxi < niz[i])
+        {
+        maxi=niz[i]
+        }
+        printf("\n Maximum zapremina balvana je %10.2f\n",maxi);
+        return 0;
+        }
 
-class pravougaonik : public oblik {
-private:
-    float duzina, sirina;
-public:
-    void ucitavanje() override {
-        printf("Unesite sirinu: \n");
-        scanf("%f", &sirina);
-        printf("Unesite duzinu: \n");
+
+34.
+Definisati klasu primer koja ima private x i javne funkcije SET i GET kao i CIN i COUT i THIS operatore.
+
+
+        class primer{
+        private:
+        int x;
+        public:
+        void set(int a)
+        {
+        this->x=a;
+        }
+        int get()
+        {
+        return 2*this->x;
+        }
+        };
+        int main()
+        {
+        primer test,test1,test2;
+        int b;
+        test.set(3);
+        cout << test.get() << endl;
+        test1.set(5);
+        cout << test1.get() << endl;
+        cout <<"Unesi neki broj"<< endl; cin>
+        >b;
+        test2.set(b);
+        cout << test2.get() << endl;
+        float z;
+        cout <<"Unesi neki realan broj" << endl;
+        cin >>z;
+        cout <<"UNELI STE BROJ: "<< z << endl;
+        return 0;
+        }
+    
+35.
+Definisati klasu radnik koja ima privatne promenljive broj sati i cena po satu. Klasa ima funkciju za izracunavanje plate.
+
+Formiramo 2 objekta Miku i Ziku. Unosimo podatke za njih i na ekranu ispisujemo ko ima vecu platu. Koristiti SET, GET i THIS.
+
+
+        class radnik{
+        private:
+        int brojsati, cenaposatu;
+        public:
+        void set(int brs, int cps)
+        {
+        this-> brojsati=brs;
+        this-> cenaposatu=cps;
+        }
+        int get()
+        {
+        return this->cenaposatu* this->brojsati;
+        }
+        };
+        int main()
+        {
+        radnik Mika, Zika;
+        int x,y;
+        cout << "Unesi cenu za Miku" << endl;
+        cin>>x;
+        cout << "Unesi sate za Miku" << endl;
+        cin>>y;
+        Mika.set(x,y);
+        cout << "Unesi cenu za Ziku" << endl;
+        cin>>x;
+        cout << "Unesi sate za Ziku" << endl;
+        cin>>y;
+        Zika.set(x,y);
+        if(Zika.get()>Mika.get()) cout << "Zika ima vecu platu" << endl;
+        else cout << "Mika ima vecu platu" << endl;
+        return 0;
+        }
+    
+36.
+Firma ima sto radnika, cena po satu i broj sati generisu se random. Odrediti najvecu platu i ispisati je na ekranu.
+
+
+        class radnik{
+        private:
+        int brojsati, cenaposatu;
+        public:
+        void set(int brs, int cps)
+        {
+        this-> brojsati=brs;
+        this-> cenaposatu=cps;
+        }
+        int get()
+        {
+        return this->cenaposatu* this->brojsati;
+        }
+        };
+        int main()
+        {
+        radnik niz[100];
+        int i,x,y,maxi=0,poz=0;
+        srand(time(0));
+        for(i=0;i < 100;i++) 
+        {
+        x=rand()%700+500;
+        y=rand()%100+100;
+        niz[i].set(x,y);
+        if(niz[i].get()>maxi)
+        {
+        maxi=niz[i].get();
+        poz=i;
+        }
+        cout << niz[i].get()<< endl;
+        }
+        cout << "Najveca plata je: " << maxi << endl;
+        getchar();
+        return 0;
+        }
+37.
+Formirati klasu bazen koja ima privatne duzina, sirina i dubina, formirati dva objekta Mika i Zika. Odrediti ciji bazen je veci.
+
+
+        class Bazen
+        {
+        private:
+        float duzina;
+        float sirina;
+        float dubina;
+        public:
+        void ucitaj()
+        {
+        printf("Unesi duzinu bazena: ");
         scanf("%f", &duzina);
-    }
-    float povrsina() override {
-        return duzina * sirina;
-    }
-};
+        printf("Unesi sirinu bazena: ");
+        scanf("%f", &sirina);
+        printf("Unesi dubinu bazena: ");
+        scanf("%f", &dubina);
+        }
+        float zapremina()
+        {
+        return duzina * sirina * dubina;
+        }
+        };
+        int main()
+        {
+        Bazen Mika, Zika;
+        printf("Podaci za Mikin bazen:\n");
+        Mika.ucitaj();
+        printf("\nPodaci za Zikin bazen:\n");
+        Zika.ucitaj();
+        float zapMika = Mika.zapremina();
+        float zapZika = Zika.zapremina();
+        printf("\nZapremina Mikinog bazena je: %.2f\n", zapMika);
+        printf("Zapremina Zikinog bazena je: %.2f\n", zapZika);
+        if (zapMika > zapZika)
+        printf("\nMika ima veci bazen.\n");
+        else if (zapZika > zapMika)
+        printf("\nZika ima veci bazen.\n");
+        else
+        printf("\nBazeni su iste velicine.\n");
+        return 0;
+        }
+   
+38.
+ Formirati klasu vektor koja ima promenljive x,y i z, konstruktor i funkciju za izracunavanje zbira vektora.
 
-class krug : public oblik {
-private:
-    float r;
-public:
-    void ucitavanje() override {
-        printf("Unesite poluprecnik: \n");
-        scanf("%f", &r);
-    }
-    float povrsina() override {
-        return r * r * 3.14;
-    }
-};
 
-int main() {
-    oblik* x = nullptr;
-    int izbor;
+        class vektor
+        {
+        public:
+        int x,y,z;
+        vektor(){};
+        vektor(int a, int b, int c)
+        {
+        this->x=a;
+        this->y=b;
+        this->z=c;
+        }
+        vektor operator^(vektor p)
+        {
+        vektor temp;
+        temp.x=x+p.x;
+        temp.y=y+p.y;
+        temp.z=z+p.z;
+        return temp;
+        }
+        };
 
-    printf("Izbor oblika: \n");
-    printf("1 - Pravougaonik \n");
-    printf("2 - Krug \n");
-    scanf("%d", &izbor);
+        int main()
+        {
+        vektor c;
+        vektor a(3,4,1);
+        vektor b(5,6,2);
+        c=a^b;
+        printf("Vektor a ima koordinate %d %d %d\n", a.x, a.y, a.z);
+        printf("Vektor b ima koordinate %d %d %d\n", b.x, b.y, b.z);
+        printf("Vektor c ima koordinate %d %d %d\n", c.x, c.y, c.z);
+        return 0;
+        }
 
-    if (izbor == 1) {
-        x = new pravougaonik();
-    }
-    if (izbor == 2) {
-        x = new krug();
-    }
 
-    if (x != nullptr) {
+39.
+Formirati klasu voz koja ima promenljive broj vagona i broj sedista po vagonu. Napraviti operaciju sabiranja tako sto novi voz ima zbir vagona i sedista.
+
+
+        class voz
+        {
+        public:
+        int vagoni, sedista;
+        voz(){};
+        voz(int a, int b)
+        {
+        this->vagoni=a;
+        this->sedista=b;
+        }
+        voz operator%(voz p)
+        {
+        voz temp;
+        int z1=vagoni*sedista;
+        int z2=p.vagoni*p.sedista;
+        int z3=z1+z2;
+        int z4=z3/(vagoni+p.vagoni);
+        temp.vagoni=vagoni+p.vagoni;
+        temp.sedista=z4;
+        return temp;
+        }
+        };
+
+        int main()
+        {
+        voz c;
+        voz a(3,4);
+        voz b(5,6);
+        c=a%b;
+        printf("Voz a ima %d vagona i %d sedista\n", a.vagoni, a.sedista);
+        printf("Voz b ima %d vagona i %d sedista\n", b.vagoni, b.sedista);
+        printf("Voz c ima %d vagona i %d sedista\n", c.vagoni, c.sedista);
+        return 0;
+        }
+
+
+40.
+Definisati overload funkciju oduzimanja.
+
+
+        class smanji
+        {
+        public:
+        int oduzimanje(int x, int b)
+        {
+        return x-b;
+        }
+        int oduzimanje(int x, int b, int c)
+        {
+        return (x-(b-c));
+        }
+        int oduzimanje(double x, double b)
+        {
+        return x-b;
+        }
+        int oduzimanje(int x, int b, int c, int d)
+        {
+        int rezultat;
+        if(d==3) rezultat=x+b+c;
+        if(d==5) rezultat=x*b*c;
+        if(d!=3 && d!=5) rezultat=x*x*x;
+        return rezultat;
+        }
+        };
+
+        int main()
+        {
+        smanji a;
+        printf("rezultat je %d\n", a.oduzimanje(10,5));
+        printf("rezultat je %d\n", a.oduzimanje(10,5,3));
+        printf("rezultat je %.2f\n", a.oduzimanje(10.5,5.5));
+        printf("rezultat je %d\n", a.oduzimanje(10,5,3,1));
+        return 0;
+        }
+
+41.
+FKorisnik učitava cele brojeve i sabira ih funkcijom za sabiranje. Sabiranje prestaje kada ukupan zbir pređe vrednost x.
+
+
+        void saberi(int broj, int &zbir, int x)
+        {
+        zbir += broj;
+        if (zbir > x) throw 1;
+        }
+        int main()
+        {
+        int broj, zbir = 0, x, uslov = 0;
+        printf("Unesi granicnu vrednost x: ");
+        scanf("%d", &x);
+        do {
+        try {
+        printf("Unesi ceo broj: ");
+        scanf("%d", &broj);
+        saberi(broj, zbir, x);
+        printf("Trenutni zbir je: %d\n", zbir);
+        }
+        catch (int greska) {
+        if (greska == 1) {
+        printf("\nZbir je presao vrednost %d.\n", x);
+        printf("Konacan zbir je: %d\n", zbir);
+        uslov = 1;
+        }
+        }
+        } while (!uslov);
+        return 0;
+        }
+42.
+    Korisnik učitava obim i dužinu panjeva. Korisnik unosi pojedinačno a program non stop sabira i određuje ukupnu zapreminu panjeva.
+
+Program prekida rad sabiranja ako je zapremina veća od zadate.
+
+
+        #define PI 3.14159
+
+        void zapremina(float obim, float duzina, float &ukupnaZapremina, float granica)
+        {
+        float r = obim / (2 * PI);
+        float zapremina = PI * r * r * duzina;
+        ukupnaZapremina += zapremina;
+        if (ukupnaZapremina > granica) throw 1;
+        }
+
+        int main()
+        {
+        float obim, duzina, ukupnaZapremina = 0, granica;
+        int uslov = 0;
+        printf("Unesi maksimalnu dozvoljenu zapreminu: ");
+        scanf("%f", &granica);
+
+        do {
+        try {
+        printf("\nUnesi obim panja: ");
+        scanf("%f", &obim);
+        printf("Unesi duzinu panja: ");
+        scanf("%f", &duzina);
+        zapremina(obim, duzina, ukupnaZapremina, granica);
+        printf("Trenutna ukupna zapremina je: %.2f\n", ukupnaZapremina);
+        }
+        catch (int p) {
+        if (p == 1) {
+        printf("\nUkupna zapremina je presla zadatu vrednost %.2f\n", granica);
+        printf("Konacna zapremina je: %.2f\n", ukupnaZapremina);
+        uslov = 1;
+        }
+        }
+
+        } while (!uslov);
+        return 0;
+        }
+    
+43.
+Na ulazu u klub korisnik unosi koliko ima godina. Program ispisuje poruku ako korisnik nema 18 godina.
+
+
+        int provera(int x)
+        {
+        if (x < 18) throw 1;
+        return printf("Dobrodosli u klub!\n");
+        }
+
+        int main()
+        {
+        int x;
+        printf("Unesi koliko imas godina: ");
+        scanf("%d", &x);
+        try {
+        provera(x);
+        }
+        catch (int p) {
+        if (p == 1) printf("Nemate 18 godina. Ulaz u klub nije dozvoljen.\n");
+        }
+        return 0;
+        }
+ 
+44.  
+Korisnik učitava realne brojeve u petlji while. U toku učitavanja vrši sabiranje uz pomoć funkcije za sabiranje. Ako korisnik unese neparan broj sabiranje se prekida i zbir se ispisuje na ekranu.
+
+
+        int sabiranje(int a, int b)
+        {
+        int temp;
+        if(a%2) throw 1;
+        temp=a+b;
+        return temp;
+        }
+
+        int main()
+        {
+        int a, z=0, uslov=0;
+        printf("Unesi cele brojeve\n");
+        do
+        {
+        try
+        {
+        scanf("%d", &a);
+        z=sabiranje(a,z);
+        printf("Trenutan zbir je : %d\n", z);
+        }
+        catch(int p)
+        {
+        if(p==1) printf("Uneli ste neparan broj!!!\n Zbir je : %d", z);
+        uslov=1;
+        }
+        }
+        while(uslov==0);
+        return 0;
+        }
+
+
+45.
+Formirati klasu krug koja implementira interfejs u main funkciji dozvoliti korisniku da bira da li će se formirati objekat pravougaonik ili krug. Učitati podatke i ispisati površinu.
+
+
+        class oblik{
+        public:
+        virtual void ucitavanje()=0;
+        virtual float povrsina()=0;
+        virtual ~oblik() {} //mora da ima konstruktor
+        };
+
+        class pravougaonik:public oblik{
+        private:
+        float sirina,duzina;
+        public:
+        void ucitavanje() override
+        {
+        printf("Unesite sirinu:\n");
+        scanf("%f",&sirina);
+        printf("Unesite duzinu:\n");
+        scanf("%f",&duzina);
+        }
+        float povrsina()override
+        {
+        return duzina*sirina;
+        }
+        };
+
+        class krug:public oblik{
+        private:
+        float poluprecnik;
+        public:
+        void ucitavanje() override
+        {
+        printf("Unesite poluprecnik:\n");
+        scanf("%f",&poluprecnik);
+        }
+        float povrsina()override
+        {
+        return poluprecnik*poluprecnik*3.14;
+        }
+        };
+
+        int main()
+        {
+        oblik* x=nullptr;
+        int izbor;
+        printf("Izaberite oblik:\n");
+        printf("1 - Pravougaonik\n");
+        printf("2 - Krug\n");
+        scanf("%d",&izbor);
+        if(izbor==1)
+        {
+        x=new pravougaonik();
+        }
+        if(izbor==2)
+        {
+        x=new krug();
+        }
         x->ucitavanje();
-        printf("Povrsina je %.2f\n", x->povrsina());
-        delete x;
-    }
 
-    return 0;
-}
+        printf("Povrsina je: %10.2f\n",x->povrsina());
+        delete x;
+        return 0;
+        }
+
+46.
+Realizovati zadatak sa menadžerom i prodavcem tako što će se napraviti interfejs izbor 1 ili 2 i računamo platu.
+
+
+        class radnik
+        {
+        public:
+        virtual void ucitavanje() = 0;
+        virtual float plata() = 0;
+        virtual void ispis() = 0;
+        };
+
+        class prodavac : public radnik
+        {
+        private:
+        float a, b;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi broj sati\n");
+        scanf("%f", &a);
+        }
+
+        float plata()
+        {
+        return a * b;
+        }
+        void ispis()
+        {
+        printf("Plata radnika je %.2f", plata());
+        }
+        };
+
+        int main()
+        {
+        int p;
+        printf("Izaberi radno mesto\n");
+        printf("1. Prodavac\n");
+        printf("2. Menadzer\n");
+        scanf("%d", &p);
+
+        if (p == 1)
+        {
+        prodavac x;
+        x.ucitavanje();
+        x.plata();
+        x.ispis();
+        }
+        return 0;
+        }
+
+
+47.
+Realizovati zadatak sa studentom i master studentom. Jedan ima dve ocene a drugi tri. Napraviti interfejs, biramo 1 ili 2 i računamo procenat.
+
+
+        class student{
+        public:
+        virtual void ucitavanje()=0;
+        virtual float prosek()=0;
+        virtual ~student() {} //mora da ima konstruktor
+        };
+
+        class osnovne:public student{
+
+        private:
+        float a,b;
+        public:
+        void ucitavanje() override
+        {
+        printf("Unesite prvu ocenu:\n");
+        scanf("%f",&a);
+        printf("Unesite drugu ocenu:\n");
+        scanf("%f",&b);
+        }
+        float prosek()override
+        {
+        return (a+b)/2;
+        }
+        };
+
+        class master:public student{
+        private:
+        float a,b,c;
+        public:
+        void ucitavanje() override
+        {
+        printf("Unesite prvu ocenu:\n");
+        scanf("%f",&a);
+        printf("Unesite drugu ocenu:\n");
+        scanf("%f",&b);
+        printf("Unesite trecu ocenu:\n");
+        scanf("%f",&c);
+        }
+        float prosek()override
+        {
+        return (a+b+c)/3;
+        }
+        };
+
+        int main()
+        {
+        student* x=nullptr;
+        int izbor;
+        printf("Izaberite studenta:\n");
+        printf("1 - Osnovne studije\n");
+        printf("2 - Master studije\n");
+        scanf("%d",&izbor);
+        if(izbor==1)
+        {
+        x=new osnovne();
+        }
+        if(izbor==2)
+        {
+        x=new master();
+        }
+        x->ucitavanje();
+        printf("Prosek je: %10.2f\n",x->prosek());
+        delete x;
+        return 0;
+        }
+Korisnik učitava po 3 broja u while petlji. Uz pomoć funkcije za sabiranje brojeva na zbir dodaje onaj broj koji je najmanji.
+
+
+        int sabiranje(int a, int b, int c, int z)
+        {
+        int temp;
+        if(a>c && b>c) temp=z+c;
+        if(a>b && c>b) temp=z+b;
+        if(b>a && c>a) temp=z+a;
+        if(a==b && b==c) throw 1;
+        return temp;
+        }
+
+        int main()
+        {
+        int a, b, c, z=0, uslov=0;
+        do
+        {
+        printf("Unesi broj:\n");
+        scanf("%d", &a);
+        printf("Unesi broj:\n");
+        scanf("%d", &b);
+        printf("Unesi broj:\n");
+        scanf("%d", &c);
+        try
+        {
+        z=sabiranje(a,b,c,z);
+        printf("Trenutan zbir je %d\n", z);
+        }
+        catch(int p)
+        {
+        if(p==1) printf("Uneli ste tri ista broja!!!\n Zbir je : %d",z);
+        uslov=1;
+        }
+        }
+        while(uslov==0);
+        return 0;
+        }
+Korisnik učitava n brojeva u petlji. Program prvo pita koliki je broj n. Nakon toga korisnik učitava n brojeva. Sa tim brojevima popunjavamo niz.
+
+Na primer ako je n=5 korisnik unosi 5,4,3,2,1 (to se upiše u niz). Na osnovu podataka iz niza želimo da program ispiše int broj 54321.
+
+
+        int main()
+        {
+        int a, p, n;
+        float k=0;
+        int niz[30];
+        printf("Koliko cifara ima");
+        scanf("%d", &n);
+        for(int i=0;i < n;i++)
+        {
+        printf("Unesi %d. cifru:\n",i+1);
+        scanf("%d", &a);
+        niz[i]=a;
+        }
+        for(int i=0;i < n;i++)
+        {
+        p=niz[i];
+        k=k+p*pow(10,n-1-i);
+        }
+        printf("Uneli ste broj %10.0f", k);
+        return 0;
+        }
+    Definisati klasu brojevi koja u sebi ima funkciju za učitavanje brojeva i izvedenu klasu te klase koja vrši sabiranje unetih brojeva.
+
+
+        class brojevi
+        {
+        protected:
+        int a,b;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi 1. broj: ");
+        scanf("%d", &a);
+        printf("Unesi 2. broj: ");
+        scanf("%d", &b);
+        }
+        };
+
+        class sabiranje:public brojevi
+        {
+        public:
+        void saberi()
+        {
+        int suma=a+b;
+        printf("Zbir je %d\n", suma);
+        }
+        };
+
+        class oduzimanje:public brojevi
+        {
+        public:
+        void oduzmi()
+        {
+        int rez=a-b;
+        printf("Rezultat je %d\n", rez);
+        }
+        };
+        int main()
+        {
+        sabiranje x;
+        oduzimanje y;
+        x.ucitavanje();
+        x.saberi();
+        y.ucitavanje();
+        y.oduzmi();
+        return 0;
+        }
+Napraviti klasu radnik koja ima ime (niz znakova), osnovnu platu (float), funkciju za unos podataka i funkciju za ipis podataka.
+
+Napraviti izvedenu klasu menadžer koja nasleđuje klasu radnik i dodatno sadrži bonus (float) i funkciju koja računa ukupnu platu i funkciju za ispis ukupne plate.
+
+
+        class radnik
+        {
+        protected:
+        char ime[30];
+        float plata;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi ime i prezime radnika\n");
+        scanf("%49[^\n]",ime);
+        printf("Unesi platu radnika\n");
+        scanf("%f",&plata);
+        }
+        void ispis()
+        {
+        printf("Radnik : %s\n",ime);
+        printf("Osnovna plata je:%10.2f\n",plata);
+        }
+        };
+
+        class menadzer:public radnik
+        {
+        private:
+        float bonus;
+        public:
+        void unesi()
+        {
+        printf("Unesi bonus menadzera\n");
+        scanf("%f",&bonus);
+        }
+        float racunaj()
+        {
+        return plata+bonus;
+        }
+        void ispisukupno()
+        {
+        printf("Ukupna plata je:%10.2f\n",racunaj());
+        }
+        };
+
+        int main()
+        {
+        menadzer x;
+        x.ucitavanje();
+        x.unesi();
+        x.ispis();
+        x.ispisukupno();
+        return 0;
+        }
+    
+Formirati glavnu klasu bankovni račun koja ima podatke za stanje (float), funkciju za definisanje početnog stanja, funkciju za isplatu, funkciju za uplatu i funkciju ispis stanja.
+
+
+        class bankovniracun{
+        protected:
+        float stanje;
+        public:
+        void unesistanje()
+        {
+        printf("Unesi pocetno stanje\n");
+        scanf("%f",&stanje);
+        }
+        void ispisstanja()
+        {
+        printf("Stanje RSD racuna je %10.2f\n", stanje);
+        }
+        void uplata(float a)
+        {
+        stanje+=a;
+        printf("Uplata od %10.2f\n proknjizena", a);
+        }
+        void isplata(float a)
+        {
+        stanje-=a;
+        printf("Isplata od %10.2f\n proknjizena", a);
+        }
+        };
+
+        class devizniracun:public bankovniracun
+        {
+        private:
+        float kurs;
+        public:
+        void unesikurs()
+        {
+        printf("Unesi kurs RSD/EUR\n" );
+        scanf("%f",&kurs);
+        }
+        void ispisstanjaeur()
+        {
+        printf("Stanje EUR racuna je %10.2f\n", stanje/kurs);
+        }
+        };
+
+        int main()
+        {
+        devizniracun y;
+        float a=1;
+        y.unesistanje();
+        y.unesikurs();
+        do{
+        printf("EUR racun\n");
+        printf("Unesi iznos uplate\n");
+        scanf("%f", &a);
+        y.uplata(a);
+        printf("Unesi iznos isplate\n");
+        scanf("%f", &a);
+        y.isplata(a);
+        y.ispisstanjaeur();
+        }while(a!=0);
+        return 0;
+        }
+
+Napraviti program za evidenciju vozila. U glavnoj klasi vozilo imamo marku (niz znakova) i godinu proizvodnje (int), funkcije ucitaj i ispisi.
+
+Napraviti izvedenu klasu automobil koja ima promenljivu broj vrata (int) i cena (float) i funkciju ucitaj i ispis. U main-u napraviti jedan objekat automobil, ako je cena veća od 200000 eur da ispiše da je auto luksuzan.
+
+
+        class Vozilo {
+        protected:
+        char marka[30];
+        int godinaProizvodnje;
+        public:
+        void ucitaj() {
+        printf("Unesi marku vozila: ");
+        scanf("%s", marka);
+        printf("Unesi godinu proizvodnje: ");
+        scanf("%d", &godinaProizvodnje);
+        }
+        void ispisi() {
+        printf("Marka: %s\n", marka);
+        printf("Godina proizvodnje: %d\n", godinaProizvodnje);
+        }
+        };
+
+        class Automobil : public Vozilo {
+        private:
+        int brojVrata;
+        float cena;
+        public:
+        void ucitaj() {
+        Vozilo::ucitaj();
+        printf("Unesi broj vrata: ");
+        scanf("%d", &brojVrata);
+        printf("Unesi cenu automobila (EUR): ");
+        scanf("%f", &cena);
+        }
+        void ispisi() {
+        Vozilo::ispisi();
+        printf("Broj vrata: %d\n", brojVrata);
+        printf("Cena: %.2f EUR\n", cena);
+        }
+        float getCena() {
+        return cena;
+        }
+        };
+
+        int main() {
+        Automobil a;
+        a.ucitaj();
+        printf("\n");
+        a.ispisi();
+        if (a.getCena() > 200000) {
+        printf("\nAutomobil je luksuzan.\n");
+        }
+        return 0;
+        }
+
+Napraviti apstraktnu klasu figura koja ima virtuelne funkcije površina i učitavanje. Napraviti klasu pravougaonik koja nasleđuje klasu figura i implementira te funkcije.
+
+U main funkciji napraviti objekat pravougaonik, učitati podatke i ispisati rezultat.
+
+
+        class figura
+        {
+        public:
+        virtual void ucitavanje() = 0;
+        virtual float povrsina() = 0;
+        };
+
+        class pravougaonik : public figura
+        {
+        private:
+        float a, b;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi stranicu a:\n");
+        scanf("%f", &a);
+        printf("Unesi stranicu b:\n");
+        scanf("%f", &b);
+        }
+
+        float povrsina()
+        {
+        return a * b;
+        }
+        };
+
+        int main()
+        {
+        pravougaonik x;
+        x.ucitavanje();
+        printf("Povrsina je: %10.2f", x.povrsina());
+        return 0;
+        }
+
+Napraviti apstraktnu klasu radnik koja ima funkcije učitavanje i plata. Napraviti klasu programer koja nasleđuje klasu radnik i ima broj sati i cenu po satu.
+
+Implementirati funkciju za računanje plate. U main funkciji napraviti objekat i ispisati platu.
+
+
+        class radnik
+        {
+        public:
+        virtual void ucitavanje() = 0;
+        virtual float plata() = 0;
+        };
+
+        class programer : public radnik
+        {
+        private:
+        float br, cps;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi broj sati:\n");
+        scanf("%f", &br);
+        printf("Unesi cenu po satu:\n");
+        scanf("%f", &cps);
+        }
+
+        float plata()
+        {
+        return br * cps;
+        }
+        };
+
+        int main()
+        {
+        programer x;
+        x.ucitavanje();
+        printf("Plata radnika je: %10.2f", x.plata());
+        return 0;
+        }
+Napraviti apstraktnu klasu student koja ima virtuelne funkcije učitavanje, prosek i ispis. Napraviti dve klase koje nasleđuju ovu klasu: osnovne_studije, master_studije.
+
+Program treba da omogući izbor tipa studija i ispis prosečne ocene.
+
+
+        class student
+        {
+        public:
+        virtual void ucitavanje() = 0;
+        virtual float prosek() = 0;
+        virtual void ispis() = 0;
+        };
+
+        class osnovne_studije : public student
+        {
+        private:
+        float a, b;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi prvu ocenu:\n");
+        scanf("%f", &a);
+        printf("Unesi drugu ocenu:\n");
+        scanf("%f", &b);
+        }
+
+        float prosek()
+        {
+        return (a + b) / 2;
+        }
+        void ispis()
+        {
+        printf("Prosecna ocena je: %10.2f", prosek());
+        }
+        };
+
+        int main()
+        {
+        int p;
+        printf("Izaberi:\n");
+        printf("1 za osnovne studije\n");
+        printf("2 za master studije\n");
+        scanf("%d", &p);
+        if (p == 1)
+        {
+        osnovne_studije x;
+        x.ucitavanje();
+        x.prosek();
+        x.ispis();
+        }
+        return 0;
+        }
+    Napraviti apstraktnu klasu radnik koja ima učitavanje, platu i ispis. Izvedene klase su prodavac i menadžer.
+
+U main funkciji bira se između prodavca i menadžera i na osnovu toga se pozivaju odgovarajuće funkcije.
+
+
+        class radnik
+        {
+        public:
+        virtual void ucitavanje() = 0;
+        virtual float plata() = 0;
+        virtual void ispis() = 0;
+        };
+
+        class prodavac : public radnik
+        {
+        private:
+        float a, b;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi broj sati\n");
+        scanf("%f", &a);
+        }
+
+        float plata()
+        {
+        return a * b;
+        }
+        void ispis()
+        {
+        printf("Plata radnika je %.2f", plata());
+        }
+        };
+
+        int main()
+        {
+        int p;
+        printf("Izaberi radno mesto\n");
+        printf("1. Prodavac\n");
+        printf("2. Menadzer\n");
+        scanf("%d", &p);
+
+        if (p == 1)
+        {
+        prodavac x;
+        x.ucitavanje();
+        x.plata();
+        x.ispis();
+        }
+        return 0;
+        }
+Napraviti apstraktnu klasu radnik koja ima učitavanje, platu i ispis. Izvedene klase su prodavac i menadžer.
+
+U main funkciji bira se između prodavca i menadžera i na osnovu toga se pozivaju odgovarajuće funkcije.
+
+
+        class radnik
+        {
+        public:
+        virtual void ucitavanje() = 0;
+        virtual float plata() = 0;
+        virtual void ispis() = 0;
+        };
+
+        class prodavac : public radnik
+        {
+        private:
+        float a, b;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi broj sati\n");
+        scanf("%f", &a);
+        }
+
+        float plata()
+        {
+        return a * b;
+        }
+        void ispis()
+        {
+        printf("Plata radnika je %.2f", plata());
+        }
+        };
+
+        int main()
+        {
+        int p;
+        printf("Izaberi radno mesto\n");
+        printf("1. Prodavac\n");
+        printf("2. Menadzer\n");
+        scanf("%d", &p);
+
+        if (p == 1)
+        {
+        prodavac x;
+        x.ucitavanje();
+        x.plata();
+        x.ispis();
+        }
+        return 0;
+        }
+
+Napraviti apstraktnu klasu kuća koja ima učitavanje dimenzija kuće i metodu za izračunavanje obima.
+
+Izvedene klase su krug i pravougaonik koje računaju obim i površinu.
+
+
+        class kuca
+        {
+        public:
+        virtual void ucitavanje() = 0;
+        virtual float obim() = 0;
+        virtual float povrsina() = 0;
+        };
+
+        class krug : public kuca
+        {
+        private:
+        float r;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi poluprecnik:\n");
+        scanf("%f", &r);
+        }
+
+        float obim()
+        {
+        return 2 * 3.14 * r;
+        }
+
+        float povrsina()
+        {
+        return 3.14 * r * r;
+        }
+        };
+
+        class pravougaonik : public kuca
+        {
+        private:
+        float a, b;
+        public:
+        void ucitavanje()
+        {
+        printf("Unesi stranicu a:\n");
+        scanf("%f", &a);
+        printf("Unesi stranicu b:\n");
+        scanf("%f", &b);
+        }
+
+        float obim()
+        {
+        return 2 * (a + b);
+        }
+
+        float povrsina()
+        {
+        return a * b;
+        }
+        };
+
+        int main()
+        {
+        int p;
+        printf("Izaberi oblik:\n");
+        printf("1 za krug\n");
+        printf("2 za pravougaonik\n");
+        scanf("%d", &p);
+        if (p == 1)
+        {
+        krug x;
+        x.ucitavanje();
+        printf("Obim je: %10.2f\n", x.obim());
+        printf("Povrsina je: %10.2f\n", x.povrsina());
+        }
+        if (p == 2)
+        {
+        pravougaonik x;
+        x.ucitavanje();
+        printf("Obim je: %10.2f\n", x.obim());
+        printf("Povrsina je: %10.2f\n", x.povrsina());
+        }
+        return 0;
+        }
+    
+Napravi interfejs oblik koji definiše funkciju za unos podataka i funkciju za unos površine. Zatim napraviti klasu pravougaonik koja implementira interfejs.
+
+UU main funkciji koristiti pokazivač na interfejs, dinamički kreirati klasu pravougaonik, uneti podatke i ispisati površinu.
+
+
+        class oblik{
+        public:
+        virtual void ucitavanje()=0;
+        virtual float povrsina()=0;
+        virtual ~oblik() {} //mora da ima konstruktor
+        };
+
+        class pravougaonik:public oblik{
+        private:
+        float sirina,duzina;
+        public:
+        void ucitavanje() override
+        {
+        printf("Unesite sirinu:\n");
+        scanf("%f",&sirina);
+        printf("Unesite duzinu:\n");
+        scanf("%f",&duzina);
+        }
+        float povrsina()override
+        {
+        return duzina*sirina;
+        }
+        };
+
+        int main()
+        {
+        //ovo * je pokazivac na interfejs
+        oblik* x=new pravougaonik();
+        //ovo new pravi dinamicki novi objekat
+        x->ucitavanje();
+        //ucitavanje preko pokazivaca
+        printf("Povrsina je: %10.2f\n",x->povrsina());
+        delete x;
+        //obavezno oslobadjanje memorije
+        return 0;
+        }
